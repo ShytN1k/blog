@@ -69,7 +69,7 @@ class Author
     private $articles;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Article", mappedBy="author", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="author", cascade={"persist"}, orphanRemoval=true)
      */
     private $comments;
 
@@ -82,6 +82,7 @@ class Author
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -161,7 +162,7 @@ class Author
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getArticles()
     {
@@ -179,8 +180,8 @@ class Author
         return $this;
     }
 
-    /**articles
-     * @return mixed
+    /**
+     * @return ArrayCollection
      */
     public function getComments()
     {
@@ -188,11 +189,14 @@ class Author
     }
 
     /**
-     * @param mixed $comments
+     * @param $comments
+     * @return $this
      */
     public function setComments($comments)
     {
         $this->comments = $comments;
+
+        return $this;
     }
 
     /**

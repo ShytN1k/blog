@@ -1,0 +1,28 @@
+AppBundle\Entity\Tag:
+  tag{1..12}:
+    tagname: <word()>
+    articles: '2x @article*'
+
+AppBundle\Entity\Comment:
+  comment{1..6}:
+    commentText: <paragraph(2)>
+    commentMark: <numberBetween(0, 10)>
+    article: '@article*'
+    author: '@author*'
+
+AppBundle\Entity\Article:
+  article{1..6}:
+    name: <sentence($nbWords = 6, $variableNbWords = true)>
+    articleText: <paragraph(5)>
+    author: '@author*'
+    tags (unique): '1x @tag*'
+    comments (unique): '1x @comment*'
+    mark: <numberBetween(0, 10)>
+
+AppBundle\Entity\Author:
+  author{1..2}:
+    nickname: <firstName()>
+    firstname: <firstName()>
+    lastname: <lastName()>
+    articles: '3x @article*'
+    comments: '3x @comment*'
