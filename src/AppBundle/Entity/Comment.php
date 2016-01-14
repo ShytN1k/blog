@@ -40,7 +40,7 @@ class Comment
      *
      * @Assert\Range(
      *      min = 0,
-     *      max = 10,
+     *      max = 5,
      *      minMessage = "Mark can not be less than {{ limit }}!",
      *      maxMessage = "Mark can not be more than {{ limit }}!"
      * )

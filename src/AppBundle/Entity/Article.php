@@ -60,15 +60,15 @@ class Article
     private $comments;
 
     /**
-     * @var int
+     * @var float
      *
      * @Assert\Range(
      *      min = 0,
-     *      max = 10,
+     *      max = 5,
      *      minMessage = "Mark can not be less than {{ limit }}!",
      *      maxMessage = "Mark can not be more than {{ limit }}!"
      * )
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float")
      */
     private $mark = 0;
 
@@ -258,6 +258,12 @@ class Article
     public function addComment(Comment $comment)
     {
         $this->comments[] = $comment;
+
+        $sum = 0;
+        foreach($this->comments as $articleComment) {
+            $sum += $articleComment->getCommentMark();
+        }
+        $this->mark = round($sum/count($this->comments), 2);
     }
     /**
      *
