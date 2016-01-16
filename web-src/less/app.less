@@ -1,1 +1,138 @@
 @import "../../bower_components/bootstrap/less/bootstrap.less";
+
+.wrapper {
+  text-align: center;
+
+  .content {
+    width: 1000px;
+    margin: auto;
+
+    .articles,
+    .sidebar {
+      display: inline-block;
+      float: left;
+    }
+
+    .articles {
+
+      ul,
+      & li {
+        display: inline-block;
+        padding: 0;
+      }
+
+      .article {
+        width: 660px;
+        padding: 15px;
+        box-sizing: border-box;
+
+        span {
+          color: #999;
+          font-size: 1.1rem;
+        }
+
+        h2 {
+          color: #999;
+          font-family: 'latobold';
+          font-size: 1.6rem;
+          font-weight: 700;
+          text-align: center;
+          margin: 5px 0 15px;
+        }
+
+        .info {
+          color: #FFC02b;
+          font-size: 14px;
+        }
+
+        p {
+          color: #999;
+          font-size: 1.4rem;
+          line-height: 22px;
+          text-align: justify;
+        }
+
+        .read-more {
+          color: #ff703b;
+          font-size: 14px;
+        }
+
+        .image {
+          float: left;
+          margin-right: 8px;
+        }
+
+        .like {
+          color: #000;
+          width: 74px;
+          font-size: 15px;
+          font-weight: bold;
+          background-color: #fffd0c;
+          border-radius: 4px;
+          text-align: center;
+          float: right;
+        }
+
+        .date {
+          font-size: 9px;
+        }
+
+        .adds {
+          border: #E8A11C 1px solid;
+          border-radius: 10px;
+          padding: 10px;
+        }
+
+        .article-content {
+          border: #E8A11C 1px solid;
+          border-radius: 10px;
+          padding: 10px;
+          text-align: left;
+        }
+      }
+    }
+
+    .sidebar {
+      width: 270px;
+      border: #E8A11C 1px solid;
+      border-radius: 10px;
+      margin: 15px 0;
+      padding: 4px;
+
+      .tag-cloud,
+      .top-articles,
+      .top-comments{
+        min-height: 200px;
+        border: #ff703b 1px solid;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: justify;
+        color: #999;
+
+        .title {
+          color: #444;
+          font-weight: bold;
+          font-size: 20px;
+        }
+
+        ul {
+          padding-left: 30px;
+
+          li {
+            list-style-type: square;
+
+          }
+        }
+      }
+    }
+  }
+
+  .all-articles p {
+    max-height: 200px;
+    overflow: hidden;
+  }
+
+  .single-article p {
+    max-height: none !important;
+  }
+}

@@ -13,7 +13,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @package AppBundle\Entity
  *
  * @ORM\Table(name="articles")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repositories\ArticleRepository")
  */
 class Article
 {

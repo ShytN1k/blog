@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="wrapper">
+        <div class="content single-article">
+            <div class="articles">
+                <div class="article">
+                    <div class="article-content">
+                        <h2>{{ article.name }}</h2>
+                        <span class="date">
+                            Posted at {{ article.createdAt|date("M-d-Y") }} by <span class="info">{{ article.author.firstname }} {{ article.author.lastname }}</span> aka <span class="info">{{ article.author.nickname }}</span>
+                        </span>
+                        <p class="single-article">
+                            {{ article.articleText }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                {{ render(controller(
+                'AppBundle:Default:sidebar'
+                )) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

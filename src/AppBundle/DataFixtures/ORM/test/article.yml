@@ -13,7 +13,7 @@ AppBundle\Entity\Comment:
 AppBundle\Entity\Article:
   article{1..10}:
     name: <sentence($nbWords = 6, $variableNbWords = true)>
-    articleText: <paragraph(15)>
+    articleText: <paragraph(100)>
     author: '@author*'
     tags (unique): '1x @tag*'
     comments (unique): '1x @comment*'

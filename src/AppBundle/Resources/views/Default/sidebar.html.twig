@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="tag-cloud">
+        <span class="title">
+            Tags:
+        </span>
+        <ul>
+            {% for tag in tags %}
+                {% set count = 10  %}
+                    {% for article in tag.articles %}
+                        {% set count = count + 1 %}
+                    {% endfor %}
+                {% if count > 24 %}
+                    {% set count = 24 %}
+                {% endif %}
+                <li><a href="#" style="font-size: {{ count }}px">{{ tag.tagname }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="top-articles">
+        <span class="title">
+            Top articles:
+        </span>
+        <ul>
+            {% for article in articles %}
+            <li>{{ article.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="top-comments">
+        <span class="title">
+            Last comments:
+        </span>
+        <ul>
+            {% for comment in comments %}
+            <li>{{ comment.commentText }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

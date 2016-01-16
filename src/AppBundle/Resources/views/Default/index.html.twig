@@ -1,81 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <ul>
-        {% for article in articles %}
-            <li class="article">
-                {#<div class="image">#}
-                    {#<img src="images/article1.jpg" alt="article">#}
-                {#</div>#}
-                <div class="content">
-                    <span class="date">Posted at {{ article.createdAt|date("M-d-Y") }}</span>
-                    <h2>{{ article.name }}</h2>
-                    <p>
-                        {{ article.articleText }}
-                    </p>
-                </div>
-                <div>
-                    <ul>
-                        <li><a href="#">{{ article.author.nickname }}</a> /</li>
-                        <li>{{ article.author.firstname }} {{ article.author.lastname }} /</li>
-                        <li><a href="#">Read more</a></li>
-                    </ul>
-                    <span class="like">{{ article.mark }}</span>
-                </div>
-            </li>
-            <br>
-        {% endfor %}
-    </ul>
+    <div class="wrapper">
+        <div class="content all-articles">
+            <div class="articles">
+                <ul>
+                    {% for article in articles %}
+                        <li class="article">
+                            {#<div class="image">#}
+                            {#<img src="images/article1.jpg" alt="article">#}
+                            {#</div>#}
+                            <div class="article-content">
+                                <h2>{{ article.name }}</h2>
+                            <span class="date">
+                                Posted at {{ article.createdAt|date("M-d-Y") }} by <span class="info">{{ article.author.firstname }} {{ article.author.lastname }}</span> aka <span class="info">{{ article.author.nickname }}</span>
+                            </span>
+
+                                <p>
+                                    {{ article.articleText }}
+                                </p>
+
+                                <div class="adds">
+                                    <ul>
+                                        <li><a href="#" class="info">{{ article.author.nickname }}</a> /</li>
+                                        <li><a href="#" class="info">{{ article.author.firstname }} {{ article.author.lastname }}</a> /</li>
+                                        <li><a href="{{ path('articles', {"articleId": article.id} )}}" class="read-more">Read more</a></li>
+                                    </ul>
+                                    <span class="like">{{ article.mark }}</span>
+                                </div>
+                            </div>
+                        </li>
+                        <br>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="sidebar">
+                {{ render(controller(
+                'AppBundle:Default:sidebar'
+                )) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        ul,
-        ul li {
-            display: inline-block; }
-        .content {
-            border: #E8A11C 1px solid;
-            border-radius: 10px;
-            padding: 10px;
-        }
-        .article {
-            width: 460px;
-            background-color: #FFF;
-            margin: 4px;
-            padding: 15px;
-            box-sizing: border-box; }
-        .article span {
-            color: #999;
-            font-size: 1.1rem; }
-        .article h2 {
-            color: #999;
-            font-family: 'latobold';
-            font-size: 1.6rem;
-            font-weight: 700; }
-        .article p {
-            color: #999;
-            font-size: 1.4rem;
-            line-height: 22px; }
-        .article div:last-child {
-            border-top: 1px solid #e5e4e4;
-            margin-top: 15px;
-            padding-top: 15px; }
-        .article li a {
-            color: #FFC02b;
-            font-size: 14px; }
-        .article .like {
-            width: 74px;
-            height: 27px;
-            font-size: 1.4rem;
-            background-color: #f4f4f4;
-            border-radius: 4px;
-            margin-left: 90px;
-            box-sizing: border-box;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center; }
-        .image {
-            float: left;
-            margin-right: 8px; }
-    </style>
-{% endblock stylesheets %}
