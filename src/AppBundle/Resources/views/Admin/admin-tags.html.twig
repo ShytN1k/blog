@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for tag in tags %}
+            <li style="height: 50px">
+                <a href="{{ path('articlesByTag', {"tagId": tag.id} )}}">{{ tag.id }}. {{ tag.tagname }}</a>
+                <a href="{{ path('edit-tag', {"tagId": tag.id} )}}" class="btn btn-primary" style="float: right" >Edit</a>
+                <hr>
+            </li>
+        {% endfor %}
+
+        <br>
+        <a href="{{ path('create-tag') }}" class="btn btn-success">Add new tag</a>
+    </ul>
+{% endblock %}

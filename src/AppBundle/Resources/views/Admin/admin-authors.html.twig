@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for author in authors %}
+            <li style="height: 50px">
+                <a href="{{ path('articlesByAuthor', {"authorId": author.id} )}}">{{ author.id }}. {{ author.firstname }} {{ author.lastname }} - {{ author.nickname }}</a>
+                <a href="{{ path('edit-author', {"authorId": author.id} )}}" class="btn btn-primary" style="float: right" >Edit</a>
+                <hr>
+            </li>
+        {% endfor %}
+
+        <br>
+        <a href="{{ path('create-author') }}" class="btn btn-success">Add new author</a>
+    </ul>
+{% endblock %}

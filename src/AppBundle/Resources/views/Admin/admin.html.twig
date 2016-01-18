@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="admin">
+        <a href="{{ path('workWithAuthors')}}" class=" btn btn-primary">Work with authors</a>
+        <a href="{{ path('workWithArticles')}}" class=" btn btn-success">Work with articles</a>
+        <a href="{{ path('workWithTags')}}" class=" btn btn-warning">Work with tags</a>
+    </div>
+{% endblock body %}

@@ -14,7 +14,7 @@ class AuthorController extends BaseController
      * @Route("/author/{authorId}", name="articlesByAuthor", requirements={"authorId" = "[0-9]+"})
      * @Method("GET")
      */
-    public function articlesByTagAction(Request $request, $authorId)
+    public function articlesByAuthorAction(Request $request, $authorId)
     {
         $author = $this->getDoctrine()->getRepository('AppBundle:Author')->find($authorId);
         $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getArticlesByAuthor($authorId);

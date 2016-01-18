@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <ul>
+        {% for article in articles %}
+            <li style="height: 50px">
+                <a href="{{ path('articles', {"articleId": article.id} )}}">{{ article.id }}. {{ article.name }}</a>
+                <a href="{{ path('edit-article', {"articleId": article.id} )}}" class="btn btn-primary" style="float: right" >Edit</a>
+                <hr>
+            </li>
+        {% endfor %}
+
+        <br>
+        <a href="{{ path('create-article') }}" class="btn btn-success">Add new article</a>
+    </ul>
+{% endblock %}

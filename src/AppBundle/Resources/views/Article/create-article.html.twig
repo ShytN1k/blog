@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <br>
+    <input type="submit" value="Create" class="btn btn-success" />
+    {{ form_end(form) }}
+
+    <a href="{{ path("workWithArticles") }}" class="btn btn-default">Back to articles</a>
+{% endblock %}
