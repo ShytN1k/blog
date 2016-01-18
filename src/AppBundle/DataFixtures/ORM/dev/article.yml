@@ -1,22 +1,22 @@
 AppBundle\Entity\Tag:
-  tag{1..20}:
+  tag{1..25}:
     tagname: <word()>
-    articles: '10x @article*'
+    articles: '2x @article*'
 
 AppBundle\Entity\Comment:
-  comment{1..50}:
+  comment{1..100}:
     commentText: <paragraph(3)>
     commentMark: <numberBetween(0, 5)>
     article: '@article*'
     author: '@author*'
 
 AppBundle\Entity\Article:
-  article{1..10}:
+  article{1..50}:
     name: <sentence($nbWords = 6, $variableNbWords = true)>
     articleText: <paragraph(100)>
     author: '@author*'
-    tags (unique): '1x @tag*'
-    comments (unique): '1x @comment*'
+    tags: '2x @tag*'
+    comments: '2x @comment*'
     mark: <randomFloat(2, 0, 5)>
 
 AppBundle\Entity\Author:
@@ -24,5 +24,5 @@ AppBundle\Entity\Author:
     nickname: <firstName()>
     firstname: <firstName()>
     lastname: <lastName()>
-    articles: '2x @article*'
-    comments: '5x @comment*'
+    articles: '10x @article*'
+    comments: '20x @comment*'

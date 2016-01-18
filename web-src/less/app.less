@@ -15,6 +15,32 @@
 
     .articles {
 
+      .header,
+      .comments {
+        border: #E8A11C 1px solid;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 15px;
+
+        span {
+          color: #d6cda8;
+          font-family: 'latobold';
+          font-size: 25px;
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+
+      .comments {
+        width: 630px;
+      }
+
+      .comments-title {
+        color: #f79e6c;
+        font-family: 'latobold';
+        font-size: 25px;
+      }
+
       ul,
       & li {
         display: inline-block;
@@ -24,6 +50,10 @@
       .article {
         width: 660px;
         padding: 15px;
+      }
+
+      .article,
+      .comments {
         box-sizing: border-box;
 
         span {
@@ -38,6 +68,11 @@
           font-weight: 700;
           text-align: center;
           margin: 5px 0 15px;
+        }
+
+        .tags {
+          color: #a448a0;
+          font-size: 14px;
         }
 
         .info {
@@ -63,11 +98,11 @@
         }
 
         .like {
-          color: #000;
+          color: #d9580f;
           width: 74px;
           font-size: 15px;
           font-weight: bold;
-          background-color: #fffd0c;
+          background-color: #ffff00;
           border-radius: 4px;
           text-align: center;
           float: right;
@@ -77,18 +112,23 @@
           font-size: 9px;
         }
 
-        .adds {
+        .adds,
+        .article-content{
           border: #E8A11C 1px solid;
           border-radius: 10px;
           padding: 10px;
         }
 
         .article-content {
-          border: #E8A11C 1px solid;
-          border-radius: 10px;
-          padding: 10px;
           text-align: left;
         }
+      }
+      .btn-default {
+        float: left;
+        background-color: #f79e6c;
+        border-color: #ff5c00;
+        color: #fff;
+        margin: 0 15px;
       }
     }
 
@@ -132,7 +172,53 @@
     overflow: hidden;
   }
 
-  .single-article p {
-    max-height: none !important;
+  .single-article {
+
+    .like {
+      float: none !important;
+      font-size: 20px !important;
+    }
+
+    .comments .like {
+      float: none !important;
+      font-size: 20px !important;
+    }
+
+    p {
+      max-height: none !important;
+    }
+  }
+
+  .pagination li a {
+    color: #f35d00;
+  }
+  .pagination>.active>a,
+  .pagination>.active>span,
+  .pagination>.active>a:hover,
+  .pagination>.active>span:hover,
+  .pagination>.active>a:focus,
+  .pagination>.active>span:focus {
+    border-color: #f35d00;
+    background-color: #ff5c00;
+  }
+
+  .author {
+    color: #FFC02b;
+    font-size: 14px;
+  }
+}
+
+.btn-default {
+  margin: 15px 0;
+  float: left;
+  background-color: #f79e6c;
+  border-color: #ff5c00;
+  color: #fff;
+
+  &:hover,
+  &:active{
+    background-color: #fff;
+    border-color: #ff5c00;
+    color: #f79e6c;
   }
 }

@@ -7,14 +7,14 @@
         </span>
         <ul>
             {% for tag in tags %}
-                {% set count = 10  %}
+                {% set count = 8  %}
                     {% for article in tag.articles %}
                         {% set count = count + 1 %}
                     {% endfor %}
                 {% if count > 24 %}
                     {% set count = 24 %}
                 {% endif %}
-                <li><a href="#" style="font-size: {{ count }}px">{{ tag.tagname }}</a></li>
+                <li><a href="{{ path('articlesByTag', {"tagId": tag.id} )}}" style="font-size: {{ count }}px">#{{ tag.tagname }}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -24,7 +24,7 @@
         </span>
         <ul>
             {% for article in articles %}
-            <li>{{ article.name }}</li>
+            <li><a href="{{ path('articles', {"articleId": article.id}) }}">{{ article.name }}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -34,7 +34,7 @@
         </span>
         <ul>
             {% for comment in comments %}
-            <li>{{ comment.commentText }}</li>
+            <li><a href="{{ path('articles', {"articleId": comment.article.id}) }}">"{{ comment.commentText }}"</a> by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.nickname }}</a></li>
             {% endfor %}
         </ul>
     </div>

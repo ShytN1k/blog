@@ -8,7 +8,7 @@ class BaseController extends Controller
 {
     public function getAllTags()
     {
-        return $this->getDoctrine()->getRepository('AppBundle:Tag')->findAll();
+        return $this->getDoctrine()->getRepository('AppBundle:Tag')->getSidebarTags();
     }
 
     public function getLastComments()
@@ -16,8 +16,8 @@ class BaseController extends Controller
         return $this->getDoctrine()->getRepository('AppBundle:Comment')->getLastComments();
     }
 
-    public function getTopAticles()
+    public function getTopArticles()
     {
-        return $this->getDoctrine()->getRepository('AppBundle:Article')->getTopAticles();
+        return $this->getDoctrine()->getRepository('AppBundle:Article')->getTopArticles();
     }
 }

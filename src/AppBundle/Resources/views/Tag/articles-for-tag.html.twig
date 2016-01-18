@@ -1,9 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <a href="{{ path('homepage')}}" class=" btn btn-default">Back to all articles</a>
     <div class="wrapper">
         <div class="content all-articles">
             <div class="articles">
+                <div class="header">
+                    <span class="">
+                        Tag: #{{ tag.tagname }}
+                    </span>
+                </div>
                 <ul>
                     {% for article in articles %}
                         <li class="article">
@@ -13,15 +19,8 @@
                             <div class="article-content">
                                 <h2>{{ article.name }}</h2>
                                 <span class="date">
-                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <span class="author">{{ article.author.nickname }}</span>
+                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a>
                                 </span>
-                                <br>
-                                <span class="tags">
-                                    {% for tag in article.tags %}
-                                        <a href="{{ path('articlesByTag', {"tagId": tag.id} )}}">#{{ tag.tagname }}</a>
-                                    {% endfor %}
-                                </span>
-
                                 <p>
                                     {{ article.articleText }}
                                 </p>

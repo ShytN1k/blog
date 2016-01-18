@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ArticleController extends BaseController
 {
     /**
-     * @Route("/article/{articleId}", name="articles", requirements={"teamId" = "[0-9]+"})
+     * @Route("/article/{articleId}", name="articles", requirements={"articleId" = "[0-9]+"})
      * @Method("GET")
      */
     public function indexAction($articleId)
