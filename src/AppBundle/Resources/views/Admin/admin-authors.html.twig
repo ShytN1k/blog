@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <a href="{{ path('create-author') }}" class="btn btn-success">Add new author</a>
     <ul>
         {% for author in authors %}
             <li style="height: 50px">
@@ -11,6 +12,9 @@
         {% endfor %}
 
         <br>
-        <a href="{{ path('create-author') }}" class="btn btn-success">Add new author</a>
     </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(authors) }}
+    </div>
+    <a href="{{ path('adminPage') }}" class="btn btn-danger">Back to admin</a>
 {% endblock %}

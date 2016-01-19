@@ -13,7 +13,7 @@
                             <div class="article-content">
                                 <h2>{{ article.name }}</h2>
                                 <span class="date">
-                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <span class="author">{{ article.author.nickname }}</span>
+                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a>
                                 </span>
                                 <br>
                                 <span class="tags">

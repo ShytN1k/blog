@@ -37,6 +37,13 @@
                         </p>
                     </div>
                 {% endfor %}
+                <div class="comments">
+                    {{ form_start(comment_form) }}
+                    {{ form_widget(comment_form) }}
+                    <br>
+                    <input type="submit" value="Add comment" class="btn btn-default" />
+                    {{ form_end(comment_form) }}
+                </div>
             </div>
             <div class="sidebar">
                 {{ render(controller(

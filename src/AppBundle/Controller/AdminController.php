@@ -31,12 +31,15 @@ class AdminController extends BaseController
      * @Route("/authors", name="workWithAuthors")
      * @Method("GET")
      */
-    public function workWithAuthorsAction()
+    public function workWithAuthorsAction(Request $request)
     {
         $authors = $this->getDoctrine()->getRepository('AppBundle:Author')->findAll();
 
+        $paging = $this->get('knp_paginator');
+        $pagination = $paging->paginate($authors, $request->query->getInt('page', 1), 10);
+
         return $this->render("AppBundle:Admin:admin-authors.html.twig", array(
-            'authors' => $authors
+            'authors' => $pagination
         ));
     }
 
@@ -44,12 +47,15 @@ class AdminController extends BaseController
      * @Route("/articles", name="workWithArticles")
      * @Method("GET")
      */
-    public function workWithArticlesAction()
+    public function workWithArticlesAction(Request $request)
     {
         $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->findAll();
 
+        $paging = $this->get('knp_paginator');
+        $pagination = $paging->paginate($articles, $request->query->getInt('page', 1), 10);
+
         return $this->render("AppBundle:Admin:admin-articles.html.twig", array(
-            'articles' => $articles
+            'articles' => $pagination
         ));
     }
 
@@ -57,12 +63,15 @@ class AdminController extends BaseController
      * @Route("/tags", name="workWithTags")
      * @Method("GET")
      */
-    public function workWithTagsAction()
+    public function workWithTagsAction(Request $request)
     {
         $tags = $this->getDoctrine()->getRepository('AppBundle:Tag')->findAll();
 
+        $paging = $this->get('knp_paginator');
+        $pagination = $paging->paginate($tags, $request->query->getInt('page', 1), 10);
+
         return $this->render("AppBundle:Admin:admin-tags.html.twig", array(
-            'tags' => $tags
+            'tags' => $pagination
         ));
     }
 
@@ -179,12 +188,12 @@ class AdminController extends BaseController
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
-            $author = $author = $this->getDoctrine()->getRepository('AppBundle:Author')->find(1);
-            if ($author !== null) {
-                $article->setAuthor($author);
-            }
 
             if ($form->isValid()) {
+                $author = $author = $this->getDoctrine()->getRepository('AppBundle:Author')->find(1);
+                if ($author !== null) {
+                    $article->setAuthor($author);
+                }
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($article);
                 $em->flush();
