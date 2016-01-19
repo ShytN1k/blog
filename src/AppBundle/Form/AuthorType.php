@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AuthorType extends AbstractType
 {
@@ -15,9 +16,9 @@ class AuthorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nickname', 'text', array('attr' => array('class' => 'form-control')))
-            ->add('firstname', 'text', array('attr' => array('class' => 'form-control')))
-            ->add('lastname', 'text', array('attr' => array('class' => 'form-control')))
+            ->add('nickname', TextType::class, array('attr' => array('class' => 'form-control')))
+            ->add('firstname', TextType::class, array('attr' => array('class' => 'form-control')))
+            ->add('lastname', TextType::class, array('attr' => array('class' => 'form-control')))
         ;
     }
 
