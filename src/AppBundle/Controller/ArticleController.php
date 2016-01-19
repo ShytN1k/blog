@@ -18,7 +18,7 @@ class ArticleController extends BaseController
     {
         $article = $this->getDoctrine()->getRepository('AppBundle:Article')->find($articleId);
         $comment = new Comment();
-        $form = $this->createForm(new CommentType(), $comment);
+        $form = $this->createForm(CommentType::class, $comment);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
