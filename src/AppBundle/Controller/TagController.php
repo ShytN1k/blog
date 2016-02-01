@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class TagController extends BaseController
+class TagController extends Controller
 {
     /**
      * @Route("/tag/{tagId}", name="articlesByTag", requirements={"tagId" = "[0-9]+"})

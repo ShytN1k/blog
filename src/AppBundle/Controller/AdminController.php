@@ -10,13 +10,14 @@ use AppBundle\Form\AuthorType;
 use AppBundle\Form\TagType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/admin", name="admin")
  */
-class AdminController extends BaseController
+class AdminController extends Controller
 {
     /**
      * @Route("/", name="adminPage")

@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthorController extends BaseController
+class AuthorController extends Controller
 {
     /**
      * @Route("/author/{authorId}", name="articlesByAuthor", requirements={"authorId" = "[0-9]+"})
@@ -16,15 +16,10 @@ class AuthorController extends BaseController
      */
     public function articlesByAuthorAction(Request $request, $authorId)
     {
-        $author = $this->getDoctrine()->getRepository('AppBundle:Author')->find($authorId);
-        $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getArticlesByAuthor($authorId);
+        $authorManager = $this->get('app.manager.author');
 
-        $paging = $this->get('knp_paginator');
-        $pagination = $paging->paginate($articles, $request->query->getInt('page', 1), 5);
-
-        return $this->render("AppBundle:Author:articles-by-author.html.twig", array(
-            'articles' => $pagination,
-            'author' => $author
-        ));
+        return $this->render("AppBundle:Author:articles-by-author.html.twig",
+            $authorManager->getArticlesByAuthor($authorId, $request->query)
+        );
     }
 }

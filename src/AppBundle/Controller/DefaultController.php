@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use AppBundle\Repositories\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 
-class DefaultController extends BaseController
+class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
@@ -16,14 +16,10 @@ class DefaultController extends BaseController
      */
     public function indexAction(Request $request)
     {
-        $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getArticlesWithTags();
+        $defaultManager = $this->get('app.manager.default');
 
-        $paging = $this->get('knp_paginator');
-        $pagination = $paging->paginate($articles, $request->query->getInt('page', 1), 5);
-
-        return $this->render("AppBundle:Default:index.html.twig", array(
-            'articles'=>$pagination
-        ));
+        return $this->render("AppBundle:Default:index.html.twig",
+            $defaultManager->getAllArticles($request->query));
     }
 
     /**
@@ -32,10 +28,10 @@ class DefaultController extends BaseController
      */
     public function sidebarAction()
     {
-        return $this->render("AppBundle:Default:sidebar.html.twig", array(
-            'tags' => $this->getAllTags(),
-            'articles' => $this->getTopArticles(),
-            'comments' => $this->getLastComments()
-        ));
+        $sidebarManager = $this->get('app.manager.sidebar');
+
+        return $this->render("AppBundle:Default:sidebar.html.twig",
+            $sidebarManager->getSidebar()
+        );
     }
 }

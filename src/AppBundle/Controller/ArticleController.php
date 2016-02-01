@@ -6,9 +6,10 @@ use AppBundle\Entity\Comment;
 use AppBundle\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class ArticleController extends BaseController
+class ArticleController extends Controller
 {
     /**
      * @Route("/article/{articleId}", name="articles", requirements={"articleId" = "[0-9]+"})
@@ -17,6 +18,7 @@ class ArticleController extends BaseController
     public function indexAction(Request $request, $articleId)
     {
         $article = $this->getDoctrine()->getRepository('AppBundle:Article')->find($articleId);
+        $commentManager = $this->get('app.manager.comments');
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
@@ -24,15 +26,7 @@ class ArticleController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $author = $author = $this->getDoctrine()->getRepository('AppBundle:Author')->find(1);
-                if ($author !== null) {
-                    $comment->setAuthor($author);
-                }
-                $comment->setArticle($article);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($comment);
-                $em->flush();
-
+               $commentManager->addNewCommentToArticle($article, $comment);
                 return $this->redirectToRoute('articles', array('articleId' => $articleId));
             }
         }
