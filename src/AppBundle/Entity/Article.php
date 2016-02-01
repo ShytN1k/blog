@@ -259,11 +259,11 @@ class Article
     {
         $this->comments[] = $comment;
 
-        $sum = 0;
-        foreach($this->comments as $articleComment) {
-            $sum += $articleComment->getCommentMark();
-        }
-        $this->mark = round($sum/count($this->comments), 2);
+//        $sum = 0;
+//        foreach($this->comments as $articleComment) {
+//            $sum += $articleComment->getCommentMark();
+//        }
+//        $this->mark = round($sum/count($this->comments), 2);
     }
     /**
      *

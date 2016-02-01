@@ -27,5 +27,9 @@
             <argument type="service" id="doctrine"/>
             <argument type="service" id="knp_paginator"/>
         </service>
+
+        <service id="app.doctrine_subscriber" class="AppBundle\EventSubscriber\DoctrineEventSubscriber">
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
     </services>
 </container>
