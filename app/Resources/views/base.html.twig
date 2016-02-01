@@ -9,7 +9,15 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% block sidebar %}
+                <div class="sidebar">
+                    {{ render(controller(
+                    'AppBundle:Default:sidebar'
+                    )) }}
+                </div>
+            {% endblock sidebar %}
+        {% endblock %}
         {% block javascripts %}
             <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
         {% endblock %}

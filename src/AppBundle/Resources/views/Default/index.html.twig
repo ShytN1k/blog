@@ -43,11 +43,9 @@
                     {{ knp_pagination_render(articles) }}
                 </div>
             </div>
-            <div class="sidebar">
-                {{ render(controller(
-                'AppBundle:Default:sidebar'
-                )) }}
-            </div>
+            {% block sidebar %}
+                {{ parent() }}
+            {% endblock sidebar %}
         </div>
     </div>
 {% endblock %}
