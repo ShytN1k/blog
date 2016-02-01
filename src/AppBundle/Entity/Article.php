@@ -258,12 +258,6 @@ class Article
     public function addComment(Comment $comment)
     {
         $this->comments[] = $comment;
-
-//        $sum = 0;
-//        foreach($this->comments as $articleComment) {
-//            $sum += $articleComment->getCommentMark();
-//        }
-//        $this->mark = round($sum/count($this->comments), 2);
     }
     /**
      *
