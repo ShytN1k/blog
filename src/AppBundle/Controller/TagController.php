@@ -16,15 +16,10 @@ class TagController extends Controller
      */
     public function articlesByTagAction(Request $request, $tagId)
     {
-        $tag = $this->getDoctrine()->getRepository('AppBundle:Tag')->find($tagId);
-        $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->getArticlesForTag($tagId);
+        $tagManager = $this->get("app.manager.tag");
 
-        $paging = $this->get('knp_paginator');
-        $pagination = $paging->paginate($articles, $request->query->getInt('page', 1), 5);
-
-        return $this->render("AppBundle:Tag:articles-for-tag.html.twig", array(
-            'articles' => $pagination,
-            'tag' => $tag
-        ));
+        return $this->render("AppBundle:Tag:articles-for-tag.html.twig",
+            $tagManager->getArticlesByTag($tagId, $request->query)
+        );
     }
 }

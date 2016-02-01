@@ -27,6 +27,7 @@ class ArticleController extends Controller
 
             if ($form->isValid()) {
                $commentManager->addNewCommentToArticle($article, $comment);
+
                 return $this->redirectToRoute('articles', array('articleId' => $articleId));
             }
         }

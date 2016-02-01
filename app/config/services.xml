@@ -22,5 +22,10 @@
         <service id="app.manager.sidebar" class="AppBundle\Manager\SidebarManager">
             <argument type="service" id="doctrine"/>
         </service>
+
+        <service id="app.manager.tag" class="AppBundle\Manager\TagManager">
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="knp_paginator"/>
+        </service>
     </services>
 </container>
