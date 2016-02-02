@@ -14,6 +14,11 @@
             <argument type="service" id="knp_paginator"/>
         </service>
 
+        <service id="app.manager.article" class="AppBundle\Manager\ArticleManager">
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="knp_paginator"/>
+        </service>
+
         <service id="app.manager.default" class="AppBundle\Manager\DefaultManager">
             <argument type="service" id="doctrine"/>
             <argument type="service" id="knp_paginator"/>

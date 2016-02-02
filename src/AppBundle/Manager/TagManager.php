@@ -2,11 +2,14 @@
 
 namespace AppBundle\Manager;
 
+use AppBundle\Traits\WorkWithEntityTrait;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Knp\Component\Pager\Paginator;
 
 class TagManager
 {
+    use WorkWithEntityTrait;
+
     protected $doctrine;
 
     protected $knp_paginator;
@@ -26,6 +29,16 @@ class TagManager
         return array(
             'articles' => $pagination,
             'tag' => $tag
+        );
+    }
+
+    public function manageTagsAsAdmin($requestQuery)
+    {
+        $tags = $this->doctrine->getRepository('AppBundle:Tag')->findAll();
+        $pagination = $this->knp_paginator->paginate($tags, $requestQuery->getInt('page', 1), 10);
+
+        return array(
+            'tags' => $pagination
         );
     }
 }

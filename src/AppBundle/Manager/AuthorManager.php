@@ -2,11 +2,14 @@
 
 namespace AppBundle\Manager;
 
+use AppBundle\Entity\Author;
+use AppBundle\Traits\WorkWithEntityTrait;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Knp\Component\Pager\Paginator;
 
 class AuthorManager
 {
+    use WorkWithEntityTrait;
     protected $paginator;
 
     protected $doctrine;
@@ -27,6 +30,16 @@ class AuthorManager
         return array(
             'articles' => $pagination,
             'author' => $author
+        );
+    }
+
+    public function manageAuthorsAsAdmin($requestQuery)
+    {
+        $authors = $this->doctrine->getRepository('AppBundle:Author')->findAll();
+        $pagination = $this->paginator->paginate($authors, $requestQuery->getInt('page', 1), 10);
+
+        return array(
+            'authors' => $pagination
         );
     }
 }

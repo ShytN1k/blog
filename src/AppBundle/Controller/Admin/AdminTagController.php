@@ -21,14 +21,11 @@ class AdminTagController extends Controller
      */
     public function workWithTagsAction(Request $request)
     {
-        $tags = $this->getDoctrine()->getRepository('AppBundle:Tag')->findAll();
+        $tagManager = $this->get("app.manager.tag");
 
-        $paging = $this->get('knp_paginator');
-        $pagination = $paging->paginate($tags, $request->query->getInt('page', 1), 10);
-
-        return $this->render("AppBundle:Admin:Tag/admin-tags.html.twig", array(
-            'tags' => $pagination
-        ));
+        return $this->render("AppBundle:Admin:Tag/admin-tags.html.twig",
+            $tagManager->manageTagsAsAdmin($request->query)
+        );
     }
 
     /**
@@ -47,9 +44,8 @@ class AdminTagController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($tag);
-                $em->flush();
+                $tagManager = $this->get("app.manager.tag");
+                $tagManager->flushEntityAsAdmin($tag);
 
                 return $this->redirectToRoute('workWithTags');
             }
@@ -73,12 +69,8 @@ class AdminTagController extends Controller
     {
         $form = $this->createDeleteTagForm($tag);
 
-        if ($request->getMethod() == 'DELETE') {
-            $form->handleRequest($request);
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($tag);
-            $em->flush();
-        }
+        $tagManager = $this->get("app.manager.tag");
+        $tagManager->deleteEntityAsAdmin($request, $form, $tag);
 
         return $this->redirectToRoute('workWithTags');
     }
@@ -115,11 +107,10 @@ class AdminTagController extends Controller
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($tag);
-                $em->flush();
+                $tagManager = $this->get("app.manager.tag");
+                $newTagId = $tagManager->flushEntityAsAdmin($tag);
 
-                return $this->redirectToRoute('articlesByTag', array('tagId' => $tag->getId()));
+                return $this->redirectToRoute('articlesByTag', array('tagId' => $newTagId));
             }
         }
 

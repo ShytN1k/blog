@@ -21,14 +21,11 @@ class AdminArticleController extends Controller
      */
     public function workWithArticlesAction(Request $request)
     {
-        $articles = $this->getDoctrine()->getRepository('AppBundle:Article')->findAll();
+        $articleManager = $this->get("app.manager.article");
 
-        $paging = $this->get('knp_paginator');
-        $pagination = $paging->paginate($articles, $request->query->getInt('page', 1), 10);
-
-        return $this->render("AppBundle:Admin:Article/admin-articles.html.twig", array(
-            'articles' => $pagination
-        ));
+        return $this->render("AppBundle:Admin:Article/admin-articles.html.twig",
+            $articleManager->manageArticlesAsAdmin($request->query)
+        );
     }
 
     /**
@@ -47,13 +44,8 @@ class AdminArticleController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $author = $author = $this->getDoctrine()->getRepository('AppBundle:Author')->find(1);
-                if ($author !== null) {
-                    $article->setAuthor($author);
-                }
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
+                $articleManager = $this->get("app.manager.article");
+                $articleManager->createNewArticle($article);
 
                 return $this->redirectToRoute('workWithArticles');
             }
@@ -77,12 +69,8 @@ class AdminArticleController extends Controller
     {
         $form = $this->createDeleteArticleForm($article);
 
-        if ($request->getMethod() == 'DELETE') {
-            $form->handleRequest($request);
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($article);
-            $em->flush();
-        }
+        $articleManager = $this->get("app.manager.article");
+        $articleManager->deleteEntityAsAdmin($request, $form, $article);
 
         return $this->redirectToRoute('workWithArticles');
     }
@@ -119,11 +107,10 @@ class AdminArticleController extends Controller
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
+                $articleManager = $this->get("app.manager.article");
+                $newArticleId = $articleManager->flushEntityAsAdmin($article);
 
-                return $this->redirectToRoute('articles', array('articleId' => $article->getId()));
+                return $this->redirectToRoute('articles', array('articleId' => $newArticleId));
             }
         }
 

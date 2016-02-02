@@ -21,14 +21,11 @@ class AdminAuthorController extends Controller
      */
     public function workWithAuthorsAction(Request $request)
     {
-        $authors = $this->getDoctrine()->getRepository('AppBundle:Author')->findAll();
+        $authorManager = $this->get("app.manager.author");
 
-        $paging = $this->get('knp_paginator');
-        $pagination = $paging->paginate($authors, $request->query->getInt('page', 1), 10);
-
-        return $this->render("AppBundle:Admin:Author/admin-authors.html.twig", array(
-            'authors' => $pagination
-        ));
+        return $this->render("AppBundle:Admin:Author/admin-authors.html.twig",
+            $authorManager->manageAuthorsAsAdmin($request->query)
+        );
     }
 
     /**
@@ -47,9 +44,8 @@ class AdminAuthorController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($author);
-                $em->flush();
+                $authorManager = $this->get("app.manager.author");
+                $authorManager->flushEntityAsAdmin($author);
 
                 return $this->redirectToRoute('workWithAuthors');
             }
@@ -73,12 +69,8 @@ class AdminAuthorController extends Controller
     {
         $form = $this->createDeleteAuthorForm($author);
 
-        if ($request->getMethod() == 'DELETE') {
-            $form->handleRequest($request);
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($author);
-            $em->flush();
-        }
+        $authorManager = $this->get("app.manager.author");
+        $authorManager->deleteEntityAsAdmin($request, $form, $author);
 
         return $this->redirectToRoute('workWithAuthors');
     }
@@ -115,11 +107,10 @@ class AdminAuthorController extends Controller
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->merge($author);
-                $em->flush();
+                $authorManager = $this->get("app.manager.author");
+                $newAuthorId = $authorManager->flushEntityAsAdmin($author);
 
-                return $this->redirectToRoute('articlesByAuthor', array('authorId' => $author->getId()));
+                return $this->redirectToRoute('articlesByAuthor', array('authorId' => $newAuthorId));
             }
         }
 
