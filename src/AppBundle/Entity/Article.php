@@ -17,7 +17,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Article
 {
-    use TimestampableEntity;
+//    use TimestampableEntity;
 
     /**
      * @var int
@@ -73,10 +73,20 @@ class Article
     private $mark = 0;
 
     /**
-     * @Gedmo\Slug(fields={"createdAt", "name"})
+     * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=64, unique=true)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -266,5 +276,37 @@ class Article
     public function removeComment(Comment $comment)
     {
         $this->comments->removeElement($comment);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Comment
 {
-    use TimestampableEntity;
+//    use TimestampableEntity;
 
     /**
      * @var int
@@ -59,10 +59,20 @@ class Comment
     private $author;
 
     /**
-     * @Gedmo\Slug(fields={"commentMark", "createdAt"})
+     * @Gedmo\Slug(fields={"commentMark", "id"})
      * @ORM\Column(length=64, unique=true)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $updatedAt;
 
     /**
      * @return int
@@ -176,5 +186,37 @@ class Comment
         $this->slug = $slug;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

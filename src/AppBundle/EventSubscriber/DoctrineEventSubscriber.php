@@ -10,7 +10,9 @@ class DoctrineEventSubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'postPersist'
+            'postPersist',
+            'prePersist',
+            'preUpdate'
         );
     }
 
@@ -30,6 +32,31 @@ class DoctrineEventSubscriber implements EventSubscriber
             $article->setMark(round($calculatedMark, 2));
             $em->merge($article);
             $em->flush();
+        }
+    }
+
+    /**
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        if($entity instanceof Comment || $entity instanceof Article) {
+            $now = new \DateTime();
+            $entity->setCreatedAt($now->format('Y-m-d H:i:s'));
+            $entity->setUpdatedAt($now->format('Y-m-d H:i:s'));
+        }
+    }
+
+    /**
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $args
+     */
+    public function preUpdate(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+        if($entity instanceof Comment || $entity instanceof Article) {
+            $now = new \DateTime();
+            $entity->setUpdatedAt($now->format('Y-m-d H:i:s'));
         }
     }
 }
