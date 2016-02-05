@@ -21,7 +21,11 @@ class DefaultManager
     {
         $articles = $this->doctrine->getRepository('AppBundle:Article')->getArticlesWithTags();
 
-        $pagination = $this->knp_paginator->paginate($articles, $requestQuery->getInt('page', 1), 5);
+        if (!empty($articles)) {
+            $pagination = $this->knp_paginator->paginate($articles, $requestQuery->getInt('page', 1), 5);
+        } else {
+            $pagination = null;
+        }
 
         return array(
             'articles'=>$pagination

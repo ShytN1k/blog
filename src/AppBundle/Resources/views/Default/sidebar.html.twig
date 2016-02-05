@@ -6,16 +6,21 @@
             Tags:
         </span>
         <ul>
-            {% for tag in tags %}
-                {% set count = 8  %}
+            {% if tags is empty %}
+                <h5>There are no tags!</h5>
+                <h5>They will be added soon!</h5>
+            {% else %}
+                {% for tag in tags %}
+                    {% set count = 8  %}
                     {% for article in tag.articles %}
                         {% set count = count + 1 %}
                     {% endfor %}
-                {% if count > 24 %}
-                    {% set count = 24 %}
-                {% endif %}
-                <li><a href="{{ path('articlesByTag', {"tagId": tag.id} )}}" style="font-size: {{ count }}px">#{{ tag.tagname }}</a></li>
-            {% endfor %}
+                    {% if count > 24 %}
+                        {% set count = 24 %}
+                    {% endif %}
+                    <li><a href="{{ path('articlesByTag', {"tagId": tag.id} )}}" style="font-size: {{ count }}px">#{{ tag.tagname }}</a></li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
     <div class="top-articles">
@@ -23,9 +28,14 @@
             Top articles:
         </span>
         <ul>
-            {% for article in articles %}
-            <li><a href="{{ path('articles', {"articleId": article.id}) }}">{{ article.name }}</a></li>
-            {% endfor %}
+            {% if articles is empty %}
+                <h5>There are no articles!</h5>
+                <h5>They will be added soon!</h5>
+            {% else %}
+                {% for article in articles %}
+                    <li><a href="{{ path('articles', {"articleId": article.id}) }}">{{ article.name }}</a></li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
     <div class="top-comments">
@@ -33,9 +43,14 @@
             Last comments:
         </span>
         <ul>
-            {% for comment in comments %}
-            <li><a href="{{ path('articles', {"articleId": comment.article.id}) }}">"{{ comment.commentText }}"</a> by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.nickname }}</a></li>
-            {% endfor %}
+            {% if comments is empty %}
+                <h5>There are no comments!</h5>
+                <h5>They will be added soon!</h5>
+            {% else %}
+                {% for comment in comments %}
+                    <li><a href="{{ path('articles', {"articleId": comment.article.id}) }}">"{{ comment.commentText }}"</a> by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.nickname }}</a></li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </div>
 {% endblock %}
