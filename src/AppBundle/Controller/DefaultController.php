@@ -34,4 +34,15 @@ class DefaultController extends Controller
             $sidebarManager->getSidebar()
         );
     }
+
+    /**
+     * @Route("/auth", name="auth")
+     * @Method("GET")
+     */
+    public function authorizationAction()
+    {
+        return $this->render("AppBundle:Default:auth.html.twig",
+            array()
+        );
+    }
 }
