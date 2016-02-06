@@ -9,7 +9,7 @@
                     <div class="article-content">
                         <h2>{{ article.name }}</h2>
                         <span class="date">
-                            Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a>
+                            Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.username }}</a>
                         </span>
                         <br>
                         <span class="like">Total mark: {{ article.mark }}</span>
@@ -30,7 +30,7 @@
                 {% for comment in article.comments %}
                     <div class="comments">
                         <span class="date">
-                            Posted at {{ comment.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.firstname }} {{ comment.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ comment.author.nickname }}</a>. Mark: <span class="info">{{ comment.commentMark }}</span>
+                            Posted at {{ comment.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.firstname }} {{ comment.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ comment.author.username }}</a>. Mark: <span class="info">{{ comment.commentMark }}</span>
                         </span>
                         <p>
                             {{ comment.commentText }}

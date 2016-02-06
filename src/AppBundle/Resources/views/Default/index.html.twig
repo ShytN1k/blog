@@ -21,7 +21,7 @@
                                 <div class="article-content">
                                     <h2>{{ article.name }}</h2>
                                 <span class="date">
-                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a>
+                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.username }}</a>
                                 </span>
                                     <br>
                                 <span class="tags">
@@ -36,7 +36,7 @@
 
                                     <div class="adds">
                                         <ul>
-                                            <li><a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a> /</li>
+                                            <li><a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.username }}</a> /</li>
                                             <li><a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> /</li>
                                             <li><a href="{{ path('articles', {"articleId": article.id} )}}" class="read-more">Read more</a></li>
                                         </ul>

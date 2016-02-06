@@ -169,14 +169,19 @@ class Article
     }
 
     /**
-     * @param $tags
-     * @return $this
+     * @param Tag $tag
      */
-    public function setTags($tags)
+    public function addTag(Tag $tag)
     {
-        $this->tags = $tags;
-
-        return $this;
+        $this->tags->add($tag);
+    }
+    /**
+     *
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
     }
 
     /**
@@ -188,14 +193,19 @@ class Article
     }
 
     /**
-     * @param $comments
-     * @return $this
+     * @param Comment $comment
      */
-    public function setComments($comments)
+    public function addComment(Comment $comment)
     {
-        $this->comments = $comments;
-
-        return $this;
+        $this->comments->add($comment);
+    }
+    /**
+     *
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
     }
 
     /**
@@ -234,37 +244,5 @@ class Article
         $this->slug = $slug;
 
         return $this;
-    }
-
-    /**
-     * @param Tag $tag
-     */
-    public function addTag(Tag $tag)
-    {
-        $this->tags[] = $tag;
-    }
-    /**
-     *
-     * @param Tag $tag
-     */
-    public function removeTag(Tag $tag)
-    {
-        $this->tags->removeElement($tag);
-    }
-
-    /**
-     * @param Comment $comment
-     */
-    public function addComment(Comment $comment)
-    {
-        $this->comments[] = $comment;
-    }
-    /**
-     *
-     * @param Comment $comment
-     */
-    public function removeComment(Comment $comment)
-    {
-        $this->comments->removeElement($comment);
     }
 }
