@@ -48,7 +48,7 @@
                 <h5>They will be added soon!</h5>
             {% else %}
                 {% for comment in comments %}
-                    <li><a href="{{ path('articles', {"articleId": comment.article.id}) }}">"{{ comment.commentText }}"</a> by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.nickname }}</a></li>
+                    <li><a href="{{ path('articles', {"articleId": comment.article.id}) }}">"{{ comment.commentText }}"</a> by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.username }}</a></li>
                 {% endfor %}
             {% endif %}
         </ul>
