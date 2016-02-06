@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <br>
+    <input type="submit" value="Update Article" class="btn btn-primary" />
+    {{ form_end(edit_form) }}
+
+    <br>
+    {{ form_start(delete_form) }}
+    {{ form_widget(delete_form) }}
+    <input type="submit" value="Delete Article" class="btn btn-danger" />
+    {{ form_end(delete_form) }}
+
+    <br>
+    <a href="{{ path("workWithArticles") }}" class="btn btn-default">Back to articles</a>
+{% endblock %}

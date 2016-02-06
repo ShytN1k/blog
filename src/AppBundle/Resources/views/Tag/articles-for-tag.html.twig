@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('homepage')}}" class=" btn btn-default">Back to all articles</a>
+    <div class="wrapper">
+        <div class="content all-articles">
+            <div class="articles">
+                <div class="header">
+                    <span class="">
+                        Tag: #{{ tag.tagname }}
+                    </span>
+                </div>
+                <ul>
+                    {% for article in articles %}
+                        <li class="article">
+                            {#<div class="image">#}
+                            {#<img src="images/article1.jpg" alt="article">#}
+                            {#</div>#}
+                            <div class="article-content">
+                                <h2>{{ article.name }}</h2>
+                                <span class="date">
+                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a>
+                                </span>
+                                <p>
+                                    {{ article.articleText }}
+                                </p>
+
+                                <div class="adds">
+                                    <ul>
+                                        <li><a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a> /</li>
+                                        <li><a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> /</li>
+                                        <li><a href="{{ path('articles', {"articleId": article.id} )}}" class="read-more">Read more</a></li>
+                                    </ul>
+                                    <span class="like">{{ article.mark }}</span>
+                                </div>
+                            </div>
+                        </li>
+                        <br>
+                    {% endfor %}
+                </ul>
+                <div class="navigation">
+                    {{ knp_pagination_render(articles) }}
+                </div>
+            </div>
+            {% block sidebar %}
+                {{ parent() }}
+            {% endblock sidebar %}
+        </div>
+    </div>
+{% endblock %}

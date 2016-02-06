@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="app.manager.comments" class="AppBundle\Manager\CommentManager">
+            <argument type="service" id="doctrine"/>
+        </service>
+
+        <service id="app.manager.author" class="AppBundle\Manager\AuthorManager">
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="knp_paginator"/>
+        </service>
+
+        <service id="app.manager.article" class="AppBundle\Manager\ArticleManager">
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="knp_paginator"/>
+        </service>
+
+        <service id="app.manager.default" class="AppBundle\Manager\DefaultManager">
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="knp_paginator"/>
+        </service>
+
+        <service id="app.manager.sidebar" class="AppBundle\Manager\SidebarManager">
+            <argument type="service" id="doctrine"/>
+        </service>
+
+        <service id="app.manager.tag" class="AppBundle\Manager\TagManager">
+            <argument type="service" id="doctrine"/>
+            <argument type="service" id="knp_paginator"/>
+        </service>
+
+        <service id="app.doctrine_subscriber" class="AppBundle\EventSubscriber\DoctrineEventSubscriber">
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+    </services>
+</container>

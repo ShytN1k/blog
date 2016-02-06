@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="wrapper">
+        <div class="content all-articles">
+            <div class="articles">
+                <ul>
+                    {% if articles is null %}
+                        <li class="article">
+                            <div class="article-content">
+                                <h2>There are no articles!</h2>
+                                <h2>They will be added soon!</h2>
+                            </div>
+                        </li>
+                    {% else %}
+                        {% for article in articles %}
+                            <li class="article">
+                                {#<div class="image">#}
+                                {#<img src="images/article1.jpg" alt="article">#}
+                                {#</div>#}
+                                <div class="article-content">
+                                    <h2>{{ article.name }}</h2>
+                                <span class="date">
+                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a>
+                                </span>
+                                    <br>
+                                <span class="tags">
+                                    {% for tag in article.tags %}
+                                        <a href="{{ path('articlesByTag', {"tagId": tag.id} )}}">#{{ tag.tagname }}</a>
+                                    {% endfor %}
+                                </span>
+
+                                    <p>
+                                        {{ article.articleText }}
+                                    </p>
+
+                                    <div class="adds">
+                                        <ul>
+                                            <li><a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a> /</li>
+                                            <li><a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> /</li>
+                                            <li><a href="{{ path('articles', {"articleId": article.id} )}}" class="read-more">Read more</a></li>
+                                        </ul>
+                                        <span class="like">{{ article.mark }}</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <br>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                {% if articles is not null %}
+                    <div class="navigation">
+                        {{ knp_pagination_render(articles) }}
+                    </div>
+                {% endif %}
+            </div>
+            {% block sidebar %}
+                {{ parent() }}
+            {% endblock sidebar %}
+        </div>
+    </div>
+{% endblock %}

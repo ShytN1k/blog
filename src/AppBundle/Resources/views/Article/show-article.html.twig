@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <a href="{{ path('homepage')}}" class=" btn btn-default">Back to all articles</a>
+    <div class="wrapper">
+        <div class="content single-article">
+            <div class="articles">
+                <div class="article">
+                    <div class="article-content">
+                        <h2>{{ article.name }}</h2>
+                        <span class="date">
+                            Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a>
+                        </span>
+                        <br>
+                        <span class="like">Total mark: {{ article.mark }}</span>
+                        <br>
+                        <span class="tags">
+                            {% for tag in article.tags %}
+                                <a href="{{ path('articlesByTag', {"tagId": tag.id} )}}">#{{ tag.tagname }}</a>
+                            {% endfor %}
+                        </span>
+                        <p class="single-article">
+                            {{ article.articleText }}
+                        </p>
+                    </div>
+                </div>
+                <span class="comments-title">
+                    Comments:
+                </span>
+                {% for comment in article.comments %}
+                    <div class="comments">
+                        <span class="date">
+                            Posted at {{ comment.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.firstname }} {{ comment.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ comment.author.nickname }}</a>. Mark: <span class="info">{{ comment.commentMark }}</span>
+                        </span>
+                        <p>
+                            {{ comment.commentText }}
+                        </p>
+                    </div>
+                {% endfor %}
+                <div class="comments">
+                    {{ form_start(comment_form) }}
+                    {{ form_widget(comment_form) }}
+                    <br>
+                    <input type="submit" value="Add comment" class="btn btn-default" />
+                    {{ form_end(comment_form) }}
+                </div>
+            </div>
+            {% block sidebar %}
+                {{ parent() }}
+            {% endblock sidebar %}
+        </div>
+    </div>
+{% endblock %}
