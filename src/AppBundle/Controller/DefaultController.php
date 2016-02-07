@@ -7,7 +7,6 @@ use AppBundle\Form\RegistrationAuthorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Repositories\CommentRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -46,10 +45,27 @@ class DefaultController extends Controller
      */
     public function authorizationAction()
     {
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render(
             "AppBundle:Default:auth.html.twig",
-            array()
+            array(
+                // last username entered by the user
+                'last_username' => $lastUsername,
+                'error'         => $error,
+            )
         );
+    }
+
+    /**
+     * @Route("/login_check", name="login_check")
+     */
+    public function loginCheckAction()
+    {
     }
 
     /**

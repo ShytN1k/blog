@@ -23,6 +23,9 @@ security:
             anonymous: ~
             pattern:    ^/
             provider: blog_db_provider
+            form_login:
+                login_path: /auth
+                check_path: /login_check
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }

@@ -5,7 +5,28 @@
         <div class="content authorization">
             <div class="auth main-container">
 
+                <form id="loginForm" action="{{ path('login_check') }}" method="post">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="_password" class="form-control"/>
+
+                    {#
+                        If you want to control the URL the user
+                        is redirected to on success (more details below)
+                        <input type="hidden" name="_target_path" value="/account" />
+                    #}
+
+                    <button type="submit" class="btn btn-success">Login</button>
+                </form>
             </div>
+            {% if error %}
+                <div class="help-container">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            {% if registration is defined %}
+                <div class="help-container">You have completed registration successfully!</div>
+            {% endif %}
             {% block sidebar %}
 
             {% endblock sidebar %}

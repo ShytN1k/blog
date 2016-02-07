@@ -169,13 +169,35 @@
     &.authorization,
     &.registration {
 
-      .main-container {
+      .main-container,
+      .help-container {
         border: #E8A11C 1px solid;
         border-radius: 10px;
         padding: 10px;
-        width: 600px;
-        height: 300px;
-        margin: 25% auto;
+        width: 500px;
+
+        .btn-success {
+          margin-top: 10px;
+          width: 150px;
+          background-color: #6dcc6d;
+          border: 2px solid #62bc62;
+        }
+
+        .form-control {
+          text-align: center;
+        }
+
+      }
+
+      .main-container {
+        margin: 10% auto;
+      }
+    }
+
+    &.authorization {
+
+      .help-container {
+        margin: auto;
       }
     }
   }
