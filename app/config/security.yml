@@ -11,7 +11,7 @@ security:
     providers:
         blog_db_provider:
             entity:
-                class: AppBundle:User
+                class: AppBundle:Author
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -26,6 +26,7 @@ security:
             form_login:
                 login_path: /auth
                 check_path: /login_check
+                csrf_token_generator: security.csrf.token_manager
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }

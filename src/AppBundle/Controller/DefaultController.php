@@ -43,8 +43,9 @@ class DefaultController extends Controller
      * @Route("/auth", name="auth")
      * @Method("GET")
      */
-    public function authorizationAction()
+    public function authorizationAction(Request $request)
     {
+        $registration = $request->get("registration");
         $authenticationUtils = $this->get('security.authentication_utils');
 
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -57,6 +58,7 @@ class DefaultController extends Controller
                 // last username entered by the user
                 'last_username' => $lastUsername,
                 'error'         => $error,
+                'registration' => $registration
             )
         );
     }
