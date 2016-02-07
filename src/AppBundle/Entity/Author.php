@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class Author
@@ -14,6 +15,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="authors")
  * @ORM\Entity(repositoryClass="AppBundle\Repositories\AuthorRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
  */
 class Author implements UserInterface, \Serializable
 {
@@ -46,7 +49,15 @@ class Author implements UserInterface, \Serializable
     private $password;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 4096)
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
@@ -99,7 +110,6 @@ class Author implements UserInterface, \Serializable
     {
         $this->articles = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->isActive = true;
         $this->isAdmin = false;
     }
 
@@ -139,6 +149,22 @@ class Author implements UserInterface, \Serializable
         $this->username = $username;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
     }
 
     public function getPassword()

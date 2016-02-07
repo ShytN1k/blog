@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Author;
+use AppBundle\Form\RegistrationAuthorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,8 +20,10 @@ class DefaultController extends Controller
     {
         $defaultManager = $this->get('app.manager.default');
 
-        return $this->render("AppBundle:Default:index.html.twig",
-            $defaultManager->getAllArticles($request->query));
+        return $this->render(
+            "AppBundle:Default:index.html.twig",
+            $defaultManager->getAllArticles($request->query)
+        );
     }
 
     /**
@@ -30,7 +34,8 @@ class DefaultController extends Controller
     {
         $sidebarManager = $this->get('app.manager.sidebar');
 
-        return $this->render("AppBundle:Default:sidebar.html.twig",
+        return $this->render(
+            "AppBundle:Default:sidebar.html.twig",
             $sidebarManager->getSidebar()
         );
     }
@@ -41,8 +46,43 @@ class DefaultController extends Controller
      */
     public function authorizationAction()
     {
-        return $this->render("AppBundle:Default:auth.html.twig",
+        return $this->render(
+            "AppBundle:Default:auth.html.twig",
             array()
+        );
+    }
+
+    /**
+     * @Route("/register", name="user_registration")
+     * @Method({"GET", "POST"})
+     */
+    public function registerAction(Request $request)
+    {
+        $user = new Author();
+        $form = $this->createForm(RegistrationAuthorType::class, $user);
+
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $password = $this->get('security.password_encoder')
+                    ->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
+                return $this->redirectToRoute(
+                    "auth",
+                    array("registration" => true)
+                );
+            }
+        }
+
+        return $this->render(
+            "AppBundle:Default:registration.html.twig",
+            array('form' => $form->createView())
         );
     }
 }
