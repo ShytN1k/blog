@@ -328,7 +328,7 @@ class Author implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        if ($this->isAdmin === true) {
+        if ($this->isAdmin == true) {
             return array('ROLE_USER', 'ROLE_ADMIN');
         } else {
             return array('ROLE_USER');
