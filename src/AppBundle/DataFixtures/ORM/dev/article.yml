@@ -24,5 +24,8 @@ AppBundle\Entity\Author:
     username: <firstName()>
     firstname: <firstName()>
     lastname: <lastName()>
+    password: <password()>
+    email: <email()>
+    isadmin: <boolean()>
     articles: '10x @article*'
     comments: '20x @comment*'

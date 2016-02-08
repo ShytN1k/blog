@@ -4,10 +4,11 @@ clear
 echo "Choose action :"
 echo "1 - INSTALL"
 echo "2 - UPDATE"
-echo "3 - UPDATE DATABASE"
+echo "3 - CREATE DATABASE"
 echo "4 - UPDATE DATABASE"
-echo "5 - FIXTURES"
-echo "6 - EXIT"
+echo "5 - CREATE FIXTURES"
+echo "6 - UPDATE FIXTURES"
+echo "7 - EXIT"
 
 read Key
 
@@ -36,12 +37,17 @@ case "$Key" in
     php app/console doctrine:database:create
     php app/console doctrine:schema:update --force
 ;;
-5) echo "fixtures..."
+5) echo "creating fixtures..."
+    php app/console doctrine:database:create
+    php app/console doctrine:schema:update --force
+    php app/console hautelook_alice:doctrine:fixtures:load --no-interaction
+;;
+6) echo "updating fixtures..."
     php app/console doctrine:database:drop --force
     php app/console doctrine:database:create
     php app/console doctrine:schema:update --force
     php app/console hautelook_alice:doctrine:fixtures:load --no-interaction
 ;;
-6) exit 0
+7) exit 0
 ;;
 esac
