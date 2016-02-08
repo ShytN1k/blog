@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% block btns %}
+        {{ parent() }}
+    {% endblock btns %}
     <div class="wrapper">
         <div class="content all-articles">
             <div class="articles">

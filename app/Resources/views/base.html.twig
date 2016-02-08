@@ -10,6 +10,12 @@
     </head>
     <body>
         {% block body %}
+            {% block btns %}
+                <div class="btns-container">
+                    <a href="{{ path('auth')}}" class=" btn btn-primary">Login</a><br>
+                    <a href="{{ path('user_registration')}}" class=" btn btn-success">Registration</a>
+                </div>
+            {% endblock btns %}
             {% block sidebar %}
                 <div class="sidebar">
                     {{ render(controller(

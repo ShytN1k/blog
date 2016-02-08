@@ -176,11 +176,15 @@
         padding: 10px;
         width: 500px;
 
-        .btn-success {
-          margin-top: 10px;
+        .btn {
+          margin: 10px 0 0;
           width: 150px;
+          float: none;
+        }
+
+        .btn-success {
           background-color: #6dcc6d;
-          border: 2px solid #62bc62;
+          border: 1px solid #62bc62;
         }
 
         .form-control {
@@ -243,9 +247,19 @@
   }
 }
 
-.btn-default {
-  margin: 15px 0;
+.btns-container {
   float: left;
+  .btn {
+    width: 105px;
+
+    &:first-child {
+      margin-top: 15px;
+    }
+  }
+
+}
+
+.btn-default {
   background-color: #f79e6c;
   border-color: #ff5c00;
   color: #fff;

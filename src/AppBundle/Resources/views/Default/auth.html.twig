@@ -14,6 +14,8 @@
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <button type="submit" class="btn btn-success">Login</button>
+                    <a href="{{ path('user_registration')}}" class=" btn btn-primary">Registration</a>
+                    <a href="{{ path('homepage')}}" class=" btn btn-default">Back to articles</a>
                 </form>
             </div>
             {% if error %}
