@@ -109,7 +109,7 @@ class AdminArticleController extends Controller
 
             if ($editForm->isValid()) {
                 $articleManager = $this->get("app.manager.article");
-                $newArticleId = $articleManager->flushEntityAsAdmin($article);
+                $newArticleId = $articleManager->flushEntityAsAdmin($article, true);
 
                 return $this->redirectToRoute('articles', array('articleId' => $newArticleId));
             }

@@ -63,9 +63,9 @@ class CommentController extends Controller
 
         if ($request->getMethod() == 'POST') {
             $editForm->handleRequest($request);
+            $comment->setCommentMark($mark);
 
             if ($editForm->isValid()) {
-                $comment->setCommentMark($mark);
                 $commentManager = $this->get("app.manager.comments");
                 $commentManager->flushEntityAsAdmin($comment, true);
 

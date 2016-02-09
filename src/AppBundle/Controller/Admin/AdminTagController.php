@@ -108,7 +108,7 @@ class AdminTagController extends Controller
 
             if ($editForm->isValid()) {
                 $tagManager = $this->get("app.manager.tag");
-                $newTagId = $tagManager->flushEntityAsAdmin($tag);
+                $newTagId = $tagManager->flushEntityAsAdmin($tag, true);
 
                 return $this->redirectToRoute('articlesByTag', array('tagId' => $newTagId));
             }

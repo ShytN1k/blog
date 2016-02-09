@@ -108,7 +108,7 @@ class AdminAuthorController extends Controller
 
             if ($editForm->isValid()) {
                 $authorManager = $this->get("app.manager.author");
-                $newAuthorId = $authorManager->flushEntityAsAdmin($author);
+                $newAuthorId = $authorManager->flushEntityAsAdmin($author, true);
 
                 return $this->redirectToRoute('articlesByAuthor', array('authorId' => $newAuthorId));
             }
