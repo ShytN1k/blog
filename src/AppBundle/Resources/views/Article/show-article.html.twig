@@ -37,7 +37,7 @@
                         <p>
                             {{ comment.commentText }}
                         </p>
-                        {% if is_granted('edit') %}
+                        {% if user == comment.author or is_granted('ROLE_ADMIN') %}
                             <a href="{{ path("edit-comment", {"commentId": comment.id} ) }}" class="btn btn-warning">Edit comment</a>
                         {% endif %}
                     </div>

@@ -55,15 +55,19 @@ class CommentController extends Controller
     {
         /** @var Comment $comment */
         $comment = $this->getDoctrine()->getRepository('AppBundle:Comment')->find($commentId);
+        $mark = $comment->getCommentMark();
+        $this->denyAccessUnlessGranted('edit', $comment);
+
         $deleteForm = $this->createDeleteCommentForm($comment);
-        $editForm = $this->createForm(new CommentType(), $comment);
+        $editForm = $this->createForm(CommentType::class, $comment);
 
         if ($request->getMethod() == 'POST') {
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
+                $comment->setCommentMark($mark);
                 $commentManager = $this->get("app.manager.comments");
-                $commentManager->flushEntityAsAdmin($comment);
+                $commentManager->flushEntityAsAdmin($comment, true);
 
                 return $this->redirectToRoute('articles', array('articleId' => $comment->getArticle()->getId()));
             }
@@ -73,7 +77,7 @@ class CommentController extends Controller
         return $this->render("AppBundle:Comment:edit-comment.html.twig", array(
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-            'articleId' => $comment->getArticle()->getId()
+            'articleId' => $comment->getArticle()->getId(),
         ));
     }
 }
