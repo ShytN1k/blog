@@ -3,20 +3,26 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\Comment;
+use AppBundle\Traits\WorkWithEntityTrait;
 use Doctrine\Bundle\DoctrineBundle\Registry;
+use Knp\Component\Pager\Paginator;
 
 class CommentManager
 {
+    use WorkWithEntityTrait;
+
+    protected $knp_paginator;
+
     protected $doctrine;
 
-    public function __construct(Registry $doctrine)
+    public function __construct(Registry $doctrine, Paginator $knp_paginator)
     {
         $this->doctrine = $doctrine;
+        $this->knp_paginator = $knp_paginator;
     }
 
-    public function addNewCommentToArticle($article, Comment $comment)
+    public function addNewCommentToArticle($article, Comment $comment, $author)
     {
-        $author = $author = $this->doctrine->getRepository('AppBundle:Author')->find(1);
         if ($author !== null) {
             $comment->setAuthor($author);
         }

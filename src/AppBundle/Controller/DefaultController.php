@@ -45,7 +45,7 @@ class DefaultController extends Controller
      */
     public function authorizationAction(Request $request)
     {
-        $registration = $request->get("registration");
+        $registration = ($request->get("registration") ? true : null);
         $authenticationUtils = $this->get('security.authentication_utils');
 
         $error = $authenticationUtils->getLastAuthenticationError();

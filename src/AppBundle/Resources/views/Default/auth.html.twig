@@ -21,7 +21,7 @@
             {% if error %}
                 <div class="help-container">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
-            {% if registration is defined %}
+            {% if registration is not null %}
                 <div class="help-container">You have completed registration successfully!</div>
             {% endif %}
             {% block sidebar %}

@@ -12,8 +12,16 @@
         {% block body %}
             {% block btns %}
                 <div class="btns-container">
-                    <a href="{{ path('auth')}}" class=" btn btn-primary">Login</a><br>
+                    {% if is_granted('ROLE_USER') %}
+                        <a href="{{ path('logout')}}" class=" btn btn-danger">Logout</a><br>
+                    {% else %}
+                        <a href="{{ path('auth')}}" class=" btn btn-primary">Login</a><br>
+                    {% endif %}
                     <a href="{{ path('user_registration')}}" class=" btn btn-success">Registration</a>
+                    <br>
+                    <a href="{{ path('homepage')}}" class=" btn btn-default">Home</a>
+                    {% block otherbtns %}
+                    {% endblock otherbtns %}
                 </div>
             {% endblock btns %}
             {% block sidebar %}

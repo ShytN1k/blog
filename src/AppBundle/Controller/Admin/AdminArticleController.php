@@ -45,7 +45,8 @@ class AdminArticleController extends Controller
 
             if ($form->isValid()) {
                 $articleManager = $this->get("app.manager.article");
-                $articleManager->createNewArticle($article);
+                $user = $this->getUser();
+                $articleManager->createNewArticle($article, $user);
 
                 return $this->redirectToRoute('workWithArticles');
             }

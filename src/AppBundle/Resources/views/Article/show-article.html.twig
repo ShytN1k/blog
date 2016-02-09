@@ -3,7 +3,6 @@
 {% block body %}
     {% block btns %}
         {{ parent() }}
-        <a href="{{ path('homepage')}}" class=" btn btn-default">Home</a>
     {% endblock btns %}
     <div class="wrapper">
         <div class="content single-article">
@@ -38,15 +37,26 @@
                         <p>
                             {{ comment.commentText }}
                         </p>
+                        {% if is_granted('edit') %}
+                            <a href="{{ path("edit-comment", {"commentId": comment.id} ) }}" class="btn btn-warning">Edit comment</a>
+                        {% endif %}
                     </div>
                 {% endfor %}
-                <div class="comments">
-                    {{ form_start(comment_form) }}
-                    {{ form_widget(comment_form) }}
-                    <br>
-                    <input type="submit" value="Add comment" class="btn btn-default" />
-                    {{ form_end(comment_form) }}
-                </div>
+                {% if is_granted('ROLE_USER') %}
+                    <div class="comments">
+                        {{ form_start(comment_form) }}
+                        {{ form_widget(comment_form) }}
+                        <br>
+                        <input type="submit" value="Add comment" class="btn btn-default" />
+                        {{ form_end(comment_form) }}
+                    </div>
+                {% else %}
+                    <div class="comments">
+                        <p  style="text-align: center">
+                            If you want add a comment - <a href="{{ path('auth')}}" class=" btn btn-primary">Login</a><br>
+                        </p>
+                    </div>
+                {% endif %}
             </div>
             {% block sidebar %}
                 {{ parent() }}
