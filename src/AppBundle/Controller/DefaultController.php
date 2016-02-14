@@ -106,7 +106,7 @@ class DefaultController extends Controller
 
     /**
      *
-     * @Route("/{_locale}/setlocale/", name="set_locale", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
+     * @Route("/{_locale}/set_locale/", name="set_locale", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
      * @param Request $request
      * @param $_locale
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
