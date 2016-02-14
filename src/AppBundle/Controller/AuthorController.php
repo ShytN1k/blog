@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthorController extends Controller
 {
     /**
-     * @Route("/author/{authorId}", name="articlesByAuthor", requirements={"authorId" = "[0-9]+"})
+     * @Route("/{_locale}/author/{authorId}", name="articlesByAuthor", requirements={"_locale" : "en|ru|uk", "authorId" = "[0-9]+"}, defaults={"_locale" : "en"})
      * @Method("GET")
      */
     public function articlesByAuthorAction(Request $request, $authorId)

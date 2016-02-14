@@ -44,7 +44,7 @@ class CommentController extends Controller
     }
 
     /**
-     * @Route("/comment/{commentId}/edit", name="edit-comment", requirements={"commentId" = "[0-9]+"})
+     * @Route("/{_locale}/comment/{commentId}/edit", name="edit-comment", requirements={"_locale" : "en|ru|uk", "commentId" = "[0-9]+"}, defaults={"_locale" : "en"})
      * @Method({"GET", "POST"})
      *
      * @param Request $request

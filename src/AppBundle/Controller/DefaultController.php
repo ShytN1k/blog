@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{_locale}/", name="homepage", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
      * @Method("GET")
      */
     public function indexAction(Request $request)
@@ -26,7 +26,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/sidebar", name="sidebar")
+     * @Route("/{_locale}/sidebar", name="sidebar", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
      * @Method("GET")
      */
     public function sidebarAction()
@@ -40,7 +40,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/auth", name="auth")
+     * @Route("/{_locale}/auth", name="auth", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
      * @Method("GET")
      */
     public function authorizationAction(Request $request)
@@ -71,7 +71,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/register", name="user_registration")
+     * @Route("/{_locale}/register", name="user_registration", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
      * @Method({"GET", "POST"})
      */
     public function registerAction(Request $request)
@@ -102,5 +102,18 @@ class DefaultController extends Controller
             "AppBundle:Default:registration.html.twig",
             array('form' => $form->createView())
         );
+    }
+
+    /**
+     *
+     * @Route("/{_locale}/setlocale/", name="set_locale", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
+     * @param Request $request
+     * @param $_locale
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function setLocale(Request $request, $_locale)
+    {
+        $request->setLocale($_locale);
+        return $this->redirectToRoute('homepage');
     }
 }

@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TagController extends Controller
 {
     /**
-     * @Route("/tag/{tagId}", name="articlesByTag", requirements={"tagId" = "[0-9]+"})
+     * @Route("/{_locale}/tag/{tagId}", name="articlesByTag", requirements={"_locale" : "en|ru|uk", "tagId" = "[0-9]+"}, defaults={"_locale" : "en"})
      * @Method("GET")
      */
     public function articlesByTagAction(Request $request, $tagId)

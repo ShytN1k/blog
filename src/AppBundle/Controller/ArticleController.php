@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ArticleController extends Controller
 {
     /**
-     * @Route("/article/{articleId}", name="articles", requirements={"articleId" = "[0-9]+"})
+     * @Route("/{_locale}/article/{articleId}", name="articles", requirements={"_locale" : "en|ru|uk", "articleId" = "[0-9]+"}, defaults={"_locale" : "en"})
      * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request, $articleId)
