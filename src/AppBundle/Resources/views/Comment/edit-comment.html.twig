@@ -3,7 +3,9 @@
 {% block body %}
 
     {{ form_start(edit_form) }}
-    {{ form_widget(edit_form) }}
+    {{ form_row(edit_form.commentText) }}
+    {{ form_label(edit_form.commentMark) }}
+    {{ form_widget(edit_form.commentMark, { 'attr': {'disabled' : 'true', 'style' : 'cursor: default;'} }) }}
     <br>
     <input type="submit" value="{{ 'Update_comment'|trans }}" class="btn btn-primary" />
     {{ form_end(edit_form) }}

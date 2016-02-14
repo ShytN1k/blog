@@ -35,7 +35,8 @@ class ArticleController extends Controller
 
         return $this->render("AppBundle:Article:show-article.html.twig", array(
             'article' => $article,
-            'comment_form' => $form->createView()
+            'comment_form' => $form->createView(),
+            'user' => $this->getUser()
         ));
     }
 }

@@ -38,7 +38,7 @@ class AdminAuthorController extends Controller
     public function createAuthorAction(Request $request)
     {
         $author = new Author();
-        $form = $this->createForm(new AuthorType(), $author);
+        $form = $this->createForm(AuthorType::class, $author);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -101,14 +101,14 @@ class AdminAuthorController extends Controller
         /** @var Author $author */
         $author = $this->getDoctrine()->getRepository('AppBundle:Author')->find($authorId);
         $deleteForm = $this->createDeleteAuthorForm($author);
-        $editForm = $this->createForm(new AuthorType(), $author);
+        $editForm = $this->createForm(AuthorType::class, $author);
 
         if ($request->getMethod() == 'POST') {
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
                 $authorManager = $this->get("app.manager.author");
-                $newAuthorId = $authorManager->flushEntityAsAdmin($author);
+                $newAuthorId = $authorManager->flushEntityAsAdmin($author, true);
 
                 return $this->redirectToRoute('articlesByAuthor', array('authorId' => $newAuthorId));
             }

@@ -27,7 +27,6 @@ class CommentType extends AbstractType
                     '4.0' => 4,
                     '5.0' => 5,
                 ),
-                // *this line is important*
                 'choices_as_values' => true,
             ))
         ;
