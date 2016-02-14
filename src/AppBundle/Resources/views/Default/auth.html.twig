@@ -6,23 +6,23 @@
             <div class="auth main-container">
 
                 <form id="loginForm" action="{{ path('login_check') }}" method="post">
-                    <label for="username">Username:</label>
+                    <label for="username">{{ 'Username'|trans }}:</label>
                     <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
 
-                    <label for="password">Password:</label>
+                    <label for="password">{{ 'Password'|trans }}:</label>
                     <input type="password" id="password" name="_password" class="form-control"/>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <button type="submit" class="btn btn-success">Login</button>
-                    <a href="{{ path('user_registration')}}" class=" btn btn-primary">Registration</a>
-                    <a href="{{ path('homepage')}}" class=" btn btn-default">Back to articles</a>
+                    <a href="{{ path('user_registration')}}" class=" btn btn-primary">{{ 'Registration'|trans }}</a>
+                    <a href="{{ path('homepage')}}" class=" btn btn-default">{{ 'backs'|trans }}</a>
                 </form>
             </div>
             {% if error %}
                 <div class="help-container">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
             {% if registration is not null %}
-                <div class="help-container">You have completed registration successfully!</div>
+                <div class="help-container">{{ 'Registration_success'|trans }}!</div>
             {% endif %}
             {% block sidebar %}
 

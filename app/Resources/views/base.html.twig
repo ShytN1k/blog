@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{{ 'Title'|trans }}{% endblock %}</title>
         {% block stylesheets %}
             <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
         {% endblock %}
@@ -13,13 +13,13 @@
             {% block btns %}
                 <div class="btns-container">
                     {% if is_granted('ROLE_USER') %}
-                        <a href="{{ path('logout')}}" class=" btn btn-danger">Logout</a><br>
+                        <a href="{{ path('logout')}}" class=" btn btn-danger">{{ 'Logout'|trans }}</a><br>
                     {% else %}
-                        <a href="{{ path('auth')}}" class=" btn btn-primary">Login</a><br>
+                        <a href="{{ path('auth')}}" class=" btn btn-primary">{{ 'Login'|trans }}</a><br>
                     {% endif %}
-                    <a href="{{ path('user_registration')}}" class=" btn btn-success">Registration</a>
+                    <a href="{{ path('user_registration')}}" class=" btn btn-success">{{ 'Registration'|trans }}</a>
                     <br>
-                    <a href="{{ path('homepage')}}" class=" btn btn-default">Home</a>
+                    <a href="{{ path('homepage')}}" class=" btn btn-default">{{ 'Home'|trans }}</a>
                     {% block otherbtns %}
                     {% endblock otherbtns %}
                     <br>
