@@ -3,12 +3,12 @@
 {% block body %}
     <div class="tag-cloud">
         <span class="title">
-            Tags:
+            {{ 'Tags'|trans }}:
         </span>
         <ul>
             {% if tags is empty %}
-                <h5>There are no tags!</h5>
-                <h5>They will be added soon!</h5>
+                <h5>{{ 'no_tags'|trans }}!</h5>
+                <h5>{{ 'added_soon'|trans }}!</h5>
             {% else %}
                 {% for tag in tags %}
                     {% set count = 8  %}
@@ -25,12 +25,12 @@
     </div>
     <div class="top-articles">
         <span class="title">
-            Top articles:
+            {{ 'Top_articles'|trans }}:
         </span>
         <ul>
             {% if articles is empty %}
-                <h5>There are no articles!</h5>
-                <h5>They will be added soon!</h5>
+                <h5>{{ 'no_articles'|trans }}!</h5>
+                <h5>{{ 'added_soon'|trans }}!</h5>
             {% else %}
                 {% for article in articles %}
                     <li><a href="{{ path('articles', {"articleId": article.id}) }}">{{ article.name }}</a></li>
@@ -40,15 +40,15 @@
     </div>
     <div class="top-comments">
         <span class="title">
-            Last comments:
+            {{ 'Last_comments'|trans }}:
         </span>
         <ul>
             {% if comments is empty %}
-                <h5>There are no comments!</h5>
-                <h5>They will be added soon!</h5>
+                <h5>{{ 'no_comments'|trans }}!</h5>
+                <h5>{{ 'added_soon'|trans }}!</h5>
             {% else %}
                 {% for comment in comments %}
-                    <li><a href="{{ path('articles', {"articleId": comment.article.id}) }}">"{{ comment.commentText }}"</a> by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.username }}</a></li>
+                    <li><a href="{{ path('articles', {"articleId": comment.article.id}) }}">"{{ comment.commentText }}"</a> {{ 'by'|trans }} <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.username }}</a></li>
                 {% endfor %}
             {% endif %}
         </ul>
