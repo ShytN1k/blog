@@ -10,7 +10,7 @@ class AuthorControllerTest extends TestBase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/author/1');
+        $crawler = $client->request('GET', '/en/author/1');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Author:', $crawler->filter('.header span')->text());

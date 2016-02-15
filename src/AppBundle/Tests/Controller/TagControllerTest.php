@@ -10,7 +10,7 @@ class TagControllerTest extends TestBase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/tag/1');
+        $crawler = $client->request('GET', '/en/tag/1');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Tag:', $crawler->filter('.header span')->text());
