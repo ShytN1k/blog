@@ -12,17 +12,16 @@
         {% block body %}
             {% block btns %}
                 <div class="btns-container">
+                    <a href="{{ path('homepage')}}" class=" btn btn-default">{{ 'Home'|trans }}</a><br>
                     {% if is_granted('ROLE_USER') %}
                         <a href="{{ path('logout')}}" class=" btn btn-danger">{{ 'Logout'|trans }}</a><br>
                     {% else %}
+                        <a href="{{ path('user_registration')}}" class=" btn btn-success">{{ 'Registration'|trans }}</a>
+                        <br>
                         <a href="{{ path('auth')}}" class=" btn btn-primary">{{ 'Login'|trans }}</a><br>
                     {% endif %}
-                    <a href="{{ path('user_registration')}}" class=" btn btn-success">{{ 'Registration'|trans }}</a>
-                    <br>
-                    <a href="{{ path('homepage')}}" class=" btn btn-default">{{ 'Home'|trans }}</a>
                     {% block otherbtns %}
                     {% endblock otherbtns %}
-                    <br>
                     <div class="lang-btns">
                         <a href="{{ path('set_locale', {"_locale": "en"} )}}" class=" btn btn-banner banner-en"></a>
                         <a href="{{ path('set_locale', {"_locale": "ru"} )}}" class=" btn btn-banner banner-ru"></a>

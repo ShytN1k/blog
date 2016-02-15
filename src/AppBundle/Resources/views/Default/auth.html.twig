@@ -13,8 +13,8 @@
                     <input type="password" id="password" name="_password" class="form-control"/>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <button type="submit" class="btn btn-success">Login</button>
-                    <a href="{{ path('user_registration')}}" class=" btn btn-primary">{{ 'Registration'|trans }}</a>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a href="{{ path('user_registration')}}" class=" btn btn-success">{{ 'Registration'|trans }}</a>
                     <a href="{{ path('homepage')}}" class=" btn btn-default">{{ 'backs'|trans }}</a>
                 </form>
             </div>
