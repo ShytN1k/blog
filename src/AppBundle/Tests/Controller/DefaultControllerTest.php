@@ -10,7 +10,7 @@ class DefaultControllerTest extends TestBase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/en/');
+        $crawler = $client->request('GET', '/');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Tags:', $crawler->filter('.tag-cloud .title')->text());
