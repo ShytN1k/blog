@@ -12,16 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="home_no_lang")
-     * @Method("GET")
-     */
-    public function noLangAction(Request $request)
-    {
-        return $this->redirectToRoute("homepage");
-    }
-
-    /**
-     * @Route("/{_locale}/", name="homepage", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
+     * @Route("/{_locale}", name="homepage", requirements={"_locale" : "en|ru|uk"}, defaults={"_locale" : "en"})
      * @Method("GET")
      */
     public function indexAction(Request $request)
