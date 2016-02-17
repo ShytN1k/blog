@@ -38,7 +38,7 @@ class AdminTagController extends Controller
     public function createTagAction(Request $request)
     {
         $tag = new Tag();
-        $form = $this->createForm(new TagType(), $tag);
+        $form = $this->createForm(TagType::class, $tag);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -101,14 +101,14 @@ class AdminTagController extends Controller
         /** @var Tag $tag */
         $tag = $this->getDoctrine()->getRepository('AppBundle:Tag')->find($tagId);
         $deleteForm = $this->createDeleteTagForm($tag);
-        $editForm = $this->createForm(new TagType(), $tag);
+        $editForm = $this->createForm(TagType::class, $tag);
 
         if ($request->getMethod() == 'POST') {
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
                 $tagManager = $this->get("app.manager.tag");
-                $newTagId = $tagManager->flushEntityAsAdmin($tag);
+                $newTagId = $tagManager->flushEntityAsAdmin($tag, true);
 
                 return $this->redirectToRoute('articlesByTag', array('tagId' => $newTagId));
             }

@@ -16,10 +16,12 @@ trait WorkWithEntityTrait
         }
     }
 
-    public function flushEntityAsAdmin($entity)
+    public function flushEntityAsAdmin($entity, $edit = false)
     {
         $em = $this->doctrine->getManager();
-        $em->persist($entity);
+        if (!$edit){
+            $em->persist($entity);
+        }
         $em->flush();
 
         return $entity->getId();

@@ -97,22 +97,11 @@ class Tag
     }
 
     /**
-     * @param $articles
-     * @return $this
-     */
-    public function setArticles($articles)
-    {
-        $this->articles = $articles;
-
-        return $this;
-    }
-
-    /**
      * @param Article $article
      */
     public function addArticle(Article $article)
     {
-        $this->articles[] = $article;
+        $this->articles->add($article);
     }
     /**
      *
@@ -122,5 +111,4 @@ class Tag
     {
         $this->articles->removeElement($article);
     }
-
 }

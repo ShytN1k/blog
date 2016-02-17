@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="wrapper">
+        <div class="content registration">
+            <div class="register main-container">
+
+                {{ form_start(form) }}
+                {{ form_row(form.username) }}
+                {{ form_row(form.firstname) }}
+                {{ form_row(form.lastname) }}
+                {{ form_row(form.email) }}
+                {% for plainPassword in form.plainPassword %}
+                    {{ form_label(plainPassword, null) }}
+                    {{ form_widget(plainPassword, { 'attr': {'class': 'form-control'} }) }}
+                {% endfor %}
+
+                <button type="submit" class="btn btn-success">{{ 'Register'|trans }}</button>
+                <a href="{{ path('homepage')}}" class=" btn btn-default">{{ 'backs'|trans }}</a>
+                {{ form_end(form) }}
+            </div>
+            {% block sidebar %}
+
+            {% endblock sidebar %}
+        </div>
+    </div>
+{% endblock %}

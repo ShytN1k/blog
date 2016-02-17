@@ -38,14 +38,15 @@ class AdminArticleController extends Controller
     public function createArticleAction(Request $request)
     {
         $article = new Article();
-        $form = $this->createForm(new ArticleType(), $article);
+        $form = $this->createForm(ArticleType::class, $article);
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $articleManager = $this->get("app.manager.article");
-                $articleManager->createNewArticle($article);
+                $user = $this->getUser();
+                $articleManager->createNewArticle($article, $user);
 
                 return $this->redirectToRoute('workWithArticles');
             }
@@ -101,14 +102,14 @@ class AdminArticleController extends Controller
         /** @var Article $article */
         $article = $this->getDoctrine()->getRepository('AppBundle:Article')->find($articleId);
         $deleteForm = $this->createDeleteArticleForm($article);
-        $editForm = $this->createForm(new ArticleType(), $article);
+        $editForm = $this->createForm(ArticleType::class, $article);
 
         if ($request->getMethod() == 'POST') {
             $editForm->handleRequest($request);
 
             if ($editForm->isValid()) {
                 $articleManager = $this->get("app.manager.article");
-                $newArticleId = $articleManager->flushEntityAsAdmin($article);
+                $newArticleId = $articleManager->flushEntityAsAdmin($article, true);
 
                 return $this->redirectToRoute('articles', array('articleId' => $newArticleId));
             }

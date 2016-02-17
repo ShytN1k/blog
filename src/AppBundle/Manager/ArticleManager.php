@@ -3,6 +3,7 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\Article;
+use AppBundle\Entity\Author;
 use AppBundle\Traits\WorkWithEntityTrait;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Knp\Component\Pager\Paginator;
@@ -32,10 +33,9 @@ class ArticleManager
         );
     }
 
-    public function createNewArticle(Article $article)
+    public function createNewArticle(Article $article, Author $author)
     {
         $em = $this->doctrine->getManager();
-        $author = $em->getRepository('AppBundle:Author')->find(1);
         if ($author !== null) {
             $article->setAuthor($author);
         }

@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="{{ path('homepage')}}" class=" btn btn-default">Back to all articles</a>
+    {% block btns %}
+        {{ parent() }}
+    {% endblock btns %}
     <div class="wrapper">
         <div class="content single-article">
             <div class="articles">
@@ -9,10 +11,10 @@
                     <div class="article-content">
                         <h2>{{ article.name }}</h2>
                         <span class="date">
-                            Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.nickname }}</a>
+                            {{ 'posted_at'|trans }} {{ article.createdAt|date("M-d-Y") }} {{ 'by'|trans }} <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.firstname }} {{ article.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ article.author.username }}</a>
                         </span>
                         <br>
-                        <span class="like">Total mark: {{ article.mark }}</span>
+                        <span class="like">{{ 'Total_mark'|trans }}: {{ article.mark }}</span>
                         <br>
                         <span class="tags">
                             {% for tag in article.tags %}
@@ -25,25 +27,36 @@
                     </div>
                 </div>
                 <span class="comments-title">
-                    Comments:
+                    {{ 'Comments'|trans }}:
                 </span>
                 {% for comment in article.comments %}
                     <div class="comments">
                         <span class="date">
-                            Posted at {{ comment.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.firstname }} {{ comment.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ comment.author.nickname }}</a>. Mark: <span class="info">{{ comment.commentMark }}</span>
+                            {{ 'posted_at'|trans }} {{ comment.createdAt|date("M-d-Y") }} {{ 'by'|trans }} <a href="{{ path('articlesByAuthor', {"authorId": comment.author.id}) }}" class="author">{{ comment.author.firstname }} {{ comment.author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": article.author.id}) }}" class="author">{{ comment.author.username }}</a>. {{ 'Mark'|trans }}: <span class="info">{{ comment.commentMark }}</span>
                         </span>
                         <p>
                             {{ comment.commentText }}
                         </p>
+                        {% if user == comment.author or is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path("edit-comment", {"commentId": comment.id} ) }}" class="btn btn-warning">{{ 'Edit_comment'|trans }}</a>
+                        {% endif %}
                     </div>
                 {% endfor %}
-                <div class="comments">
-                    {{ form_start(comment_form) }}
-                    {{ form_widget(comment_form) }}
-                    <br>
-                    <input type="submit" value="Add comment" class="btn btn-default" />
-                    {{ form_end(comment_form) }}
-                </div>
+                {% if is_granted('ROLE_USER') %}
+                    <div class="comments">
+                        {{ form_start(comment_form) }}
+                        {{ form_widget(comment_form) }}
+                        <br>
+                        <input type="submit" value="{{ 'Add_comment'|trans }}" class="btn btn-default" />
+                        {{ form_end(comment_form) }}
+                    </div>
+                {% else %}
+                    <div class="comments">
+                        <p  style="text-align: center">
+                            {{ 'comment_without_login'|trans }} - <a href="{{ path('auth')}}" class=" btn btn-primary">{{ 'Login'|trans }}</a><br>
+                        </p>
+                    </div>
+                {% endif %}
             </div>
             {% block sidebar %}
                 {{ parent() }}

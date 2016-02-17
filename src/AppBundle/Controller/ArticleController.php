@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ArticleController extends Controller
 {
     /**
-     * @Route("/article/{articleId}", name="articles", requirements={"articleId" = "[0-9]+"})
+     * @Route("/{_locale}/article/{articleId}", name="articles", requirements={"_locale" : "en|ru|uk", "articleId" = "[0-9]+"}, defaults={"_locale" : "en"})
      * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request, $articleId)
@@ -26,7 +26,8 @@ class ArticleController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
-               $commentManager->addNewCommentToArticle($article, $comment);
+                $user = $this->getUser();
+                $commentManager->addNewCommentToArticle($article, $comment, $user);
 
                 return $this->redirectToRoute('articles', array('articleId' => $articleId));
             }
@@ -34,7 +35,8 @@ class ArticleController extends Controller
 
         return $this->render("AppBundle:Article:show-article.html.twig", array(
             'article' => $article,
-            'comment_form' => $form->createView()
+            'comment_form' => $form->createView(),
+            'user' => $this->getUser()
         ));
     }
 }

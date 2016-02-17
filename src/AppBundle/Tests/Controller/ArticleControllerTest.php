@@ -10,7 +10,7 @@ class ArticleControllerTest extends TestBase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/article/1');
+        $crawler = $client->request('GET', '/en/article/1');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Posted at', $crawler->filter('.date')->text());

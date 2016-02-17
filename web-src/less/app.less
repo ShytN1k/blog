@@ -123,12 +123,11 @@
           text-align: left;
         }
       }
+
       .btn-default {
-        float: left;
         background-color: #f79e6c;
         border-color: #ff5c00;
         color: #fff;
-        margin: 0 15px;
       }
     }
 
@@ -160,7 +159,6 @@
 
           li {
             list-style-type: square;
-
           }
         }
       }
@@ -169,13 +167,39 @@
     &.authorization,
     &.registration {
 
-      .main-container {
+      .main-container,
+      .help-container {
         border: #E8A11C 1px solid;
         border-radius: 10px;
         padding: 10px;
-        width: 600px;
-        height: 300px;
-        margin: 25% auto;
+        width: 500px;
+
+        .btn {
+          margin: 10px 0 0;
+          width: 150px;
+          float: none;
+        }
+
+        .btn-success {
+          background-color: #6dcc6d;
+          border: 1px solid #62bc62;
+        }
+
+        .form-control {
+          text-align: center;
+        }
+
+      }
+
+      .main-container {
+        margin: 10% auto;
+      }
+    }
+
+    &.authorization {
+
+      .help-container {
+        margin: auto;
       }
     }
   }
@@ -221,9 +245,38 @@
   }
 }
 
-.btn-default {
-  margin: 15px 0;
+.btns-container {
   float: left;
+  padding-top: 15px;
+
+  .btn {
+    width: 105px;
+  }
+
+  .lang-btns {
+    padding: 0 10px;
+    
+    .btn-banner {
+      width: 24px;
+      height: 24px;
+    }
+
+    .banner-en {
+      background: #FFFFFF url("../images/eng_banner.png");
+    }
+
+    .banner-ru {
+      background: #FFFFFF url("../images/rus_banner.png");
+    }
+
+    .banner-uk {
+      background: #FFFFFF url("../images/ukr_banner.png");
+    }
+  }
+
+}
+
+.btn-default {
   background-color: #f79e6c;
   border-color: #ff5c00;
   color: #fff;

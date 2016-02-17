@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="{{ path('homepage')}}" class=" btn btn-default">Back to all articles</a>
+    {% block btns %}
+        {{ parent() }}
+    {% endblock btns %}
     <div class="wrapper">
         <div class="content all-articles">
             <div class="articles">
                 <div class="header">
                     <span class="">
-                        Author: {{ author.firstname }} {{ author.lastname }} aka {{ author.nickname }}
+                        {{ 'Author'|trans }}: {{ author.firstname }} {{ author.lastname }} aka {{ author.username }}
                     </span>
                 </div>
                 <ul>
@@ -19,7 +21,7 @@
                             <div class="article-content">
                                 <h2>{{ article.name }}</h2>
                                 <span class="date">
-                                    Posted at {{ article.createdAt|date("M-d-Y") }} by <a href="{{ path('articlesByAuthor', {"authorId": author.id}) }}" class="author">{{ author.firstname }} {{ author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": author.id}) }}" class="info">{{ author.nickname }}</a>
+                                    {{ 'posted_at'|trans }} {{ article.createdAt|date("M-d-Y") }} {{ 'by'|trans }} <a href="{{ path('articlesByAuthor', {"authorId": author.id}) }}" class="author">{{ author.firstname }} {{ author.lastname }}</a> aka <a href="{{ path('articlesByAuthor', {"authorId": author.id}) }}" class="info">{{ author.username }}</a>
                                 </span>
                                 <br>
                                 <span class="tags">
@@ -33,9 +35,9 @@
 
                                 <div class="adds">
                                     <ul>
-                                        <li><a href="{{ path('articlesByAuthor', {"authorId": author.id}) }}" class="author">{{ author.nickname }}</a> /</li>
+                                        <li><a href="{{ path('articlesByAuthor', {"authorId": author.id}) }}" class="author">{{ author.username }}</a> /</li>
                                         <li><a href="{{ path('articlesByAuthor', {"authorId": author.id}) }}" class="author">{{ author.firstname }} {{ author.lastname }}</a> /</li>
-                                        <li><a href="{{ path('articles', {"articleId": article.id} )}}" class="read-more">Read more</a></li>
+                                        <li><a href="{{ path('articles', {"articleId": article.id} )}}" class="read-more">{{ 'Read_more'|trans }}</a></li>
                                     </ul>
                                     <span class="like">{{ article.mark }}</span>
                                 </div>

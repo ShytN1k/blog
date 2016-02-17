@@ -5,16 +5,20 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class Author
  * @package AppBundle\Entity
  *
  * @ORM\Table(name="authors")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repositories\AuthorRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
  */
-class Author
+class Author implements UserInterface, \Serializable
 {
     /**
      * @var int
@@ -28,16 +32,39 @@ class Author
     /**
      * @var string
      *
-     * @Assert\NotBlank(message = "Blank nickname!.")
+     * @Assert\NotBlank(message = "Blank username!.")
      * @Assert\Length(
      *      min = 4,
      *      max = 16,
-     *      minMessage = "Nickname can not be less than {{ limit }}!",
-     *      maxMessage = "Nickname can not be more than {{ limit }}!"
+     *      minMessage = "Username can not be less than {{ limit }}!",
+     *      maxMessage = "Username can not be more than {{ limit }}!"
      * )
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=25, unique=true)
      */
-    private $nickname;
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 4096)
+     */
+    private $plainPassword;
+
+    /**
+     * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     */
+    private $email;
+
+    /**
+     * @ORM\Column(name="is_admin", type="boolean")
+     */
+    private $isAdmin;
 
     /**
      * @var string
@@ -74,7 +101,7 @@ class Author
     private $comments;
 
     /**
-     * @Gedmo\Slug(fields={"nickname", "firstname", "lastname"})
+     * @Gedmo\Slug(fields={"username", "firstname", "lastname"})
      * @ORM\Column(length=64, unique=true)
      */
     private $slug;
@@ -83,6 +110,7 @@ class Author
     {
         $this->articles = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->isAdmin = false;
     }
 
     /**
@@ -107,18 +135,88 @@ class Author
     /**
      * @return string
      */
-    public function getNickname()
+    public function getUsername()
     {
-        return $this->nickname;
+        return $this->username;
     }
 
     /**
-     * @param $nickname
+     * @param $username
      * @return $this
      */
-    public function setNickname($nickname)
+    public function setUsername($username)
     {
-        $this->nickname = $nickname;
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param $password
+     * @return $this
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param $email
+     * @return $this
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsAdmin()
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * @param $isAdmin
+     * @return $this
+     */
+    public function setIsAdmin($isAdmin)
+    {
+        $this->isAdmin = $isAdmin;
 
         return $this;
     }
@@ -170,14 +268,19 @@ class Author
     }
 
     /**
-     * @param $articles
-     * @return $this
+     * @param Article $article
      */
-    public function setArticles($articles)
+    public function addArticle(Article $article)
     {
-        $this->articles = $articles;
-
-        return $this;
+        $this->articles->add($article);
+    }
+    /**
+     *
+     * @param Article $article
+     */
+    public function removeArticle(Article $article)
+    {
+        $this->articles->removeElement($article);
     }
 
     /**
@@ -189,14 +292,19 @@ class Author
     }
 
     /**
-     * @param $comments
-     * @return $this
+     * @param Comment $comment
      */
-    public function setComments($comments)
+    public function addComment(Comment $comment)
     {
-        $this->comments = $comments;
-
-        return $this;
+        $this->comments->add($comment);
+    }
+    /**
+     *
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
     }
 
     /**
@@ -218,35 +326,39 @@ class Author
         return $this;
     }
 
-    /**
-     * @param Article $article
-     */
-    public function addArticle(Article $article)
+    public function getRoles()
     {
-        $this->articles[] = $article;
-    }
-    /**
-     *
-     * @param Article $article
-     */
-    public function removeArticle(Article $article)
-    {
-        $this->articles->removeElement($article);
+        if ($this->isAdmin == true) {
+            return array('ROLE_USER', 'ROLE_ADMIN');
+        } else {
+            return array('ROLE_USER');
+        }
     }
 
-    /**
-     * @param Comment $comment
-     */
-    public function addComment(Comment $comment)
+    public function getSalt()
     {
-        $this->comments[] = $comment;
+        return null;
     }
-    /**
-     *
-     * @param Comment $comment
-     */
-    public function removeComment(Comment $comment)
+
+    public function eraseCredentials()
     {
-        $this->comments->removeElement($comment);
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password
+            ) = unserialize($serialized);
     }
 }
